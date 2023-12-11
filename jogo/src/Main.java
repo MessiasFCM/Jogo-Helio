@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         Partida partida = new Partida();
         partida.inicializarRobos();
-        // partida.jogabilidadeRobos();
+        partida.jogabilidadeRobos();
         // partida.finalizarPartida();
     }
 }

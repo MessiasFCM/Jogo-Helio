@@ -12,11 +12,19 @@ public class ControladorRoboV extends Controlador {
     }
 
     @Override
-    public void executarAcao(Robo robo, Terreno terreno) {
-        if (robo instanceof RoboV) {
-            RoboV roboV = (RoboV) robo;
-            // Implemente a lógica de execução para o ControladorRoboV
-            // ...
-        }
+    public void iniciarProspeccao(Robo robo, Terreno terreno) {
+
     }
+
+    @Override
+    public void andar(Robo robo, Terreno terreno) {
+
+    }
+
+    @Override
+    public double sensorHelioDisponivel(Robo robo, Terreno terreno) {
+        return 0;
+    }
+
+
 }
