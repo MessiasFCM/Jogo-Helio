@@ -2,22 +2,12 @@
   "tempoPartida": 3,
   "equipes": [
     {
-      "nome": "Limbo",
-      "quantidadeRobos": 2,
-      "tipoRobo": "V",
-      "controladorRobo": "FFT"
-    },
-    {
       "nome": "Compilação Precoce",
-      "quantidadeRobos": 2,
-      "tipoRobo": "XYZ",
-      "controladorRobo": "V"
+      "tipoRobos": ["XYZ", "XYZ", "FFT", "FFT", "V", "V"]
     },
     {
       "nome": "Bigode Grosso",
-      "quantidadeRobos": 4,
-      "tipoRobo": "FFT",
-      "controladorRobo": "XYZ"
+      "tipoRobos": ["XYZ", "XYZ", "XYZ", "FFT", "FFT", "V", "V"]
     }
   ]
 }

@@ -12,7 +12,7 @@ public class ControladorRoboXYZ extends Controlador {
 
     @Override
     public void iniciarProspeccao(Robo robo, Terreno terreno) {
-        
+
     }
 
     @Override
