@@ -31,7 +31,7 @@ public class Partida {
         this.tempoFinal = tempoInicial.plusMinutes(dadosProcessados.getConfiguracao().getTempoPartida());
     }
 
-    public void inicializarRobos() {
+    public void inicializarJogo() {
         ArrayList<Equipe> equipes = new ArrayList<>();
         Random random = new Random();
 
@@ -118,36 +118,38 @@ public class Partida {
     }
 
 
-//    public void jogabilidadeRobos(){
-//
-//        System.out.printf("Relatórios Momentâneos:%n%n");
-//
-//        while (CalcularTempo.tempoAtual().isBefore(getTempoFinal())) {
-//            for (Equipe equipe : configuracaoDados.getEquipes()) {
-//                System.out.printf("-> Equipe %s:%n%n", equipe.getNome());
-//                for (Robo robo : equipe.getRobos()) {
-//                    if (CalcularTempo.tempoAtual().isBefore(getTempoFinal())) {
-//
-//                        robo.getControladorUtilizado().executarAcao(robo,terrenoDados);
-//
-//                        System.out.printf("--> Nome: %s%n", robo.getNome());
-//                        System.out.printf("--> Direção: %s%n", robo.getDirecaoRobo());
-//                        System.out.printf("--> Coordenada atual: [%d, %d]%n", robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-//                        System.out.printf("--> Volume de hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
-//                        System.out.printf("--> Rugosidade da célula: %.2f%n", terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getRugosidade());
-//                        System.out.printf("--> Volume de hélio-3 da célula: %.2f%n", terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getConcentracaoHelio());
-//                        long minutos = CalcularTempo.tempoFaltante(tempoFinal).toMinutes();
-//                        System.out.printf("--> Tempo faltante: %02d:%02d%n", minutos, CalcularTempo.tempoFaltante(tempoFinal).minusMinutes(minutos).getSeconds());
-//                        System.out.println();
-//
-//                        CalcularTempo.sleep(1);
-//                    }
-//                }
-//            }
-//        }
-//        System.out.printf("-> Tempo de partida encerrado.%n");
-//
-//    }
+    public void jogabilidadeRobos(){
+
+        System.out.printf("Relatórios Momentâneos:%n%n");
+
+        while (CalcularTempo.tempoAtual().isBefore(getTempoFinal())) {
+            for (Equipe equipe : configuracaoDados.getEquipes()) {
+                System.out.printf("-> Equipe %s:%n%n", equipe.getNome());
+                for (Robo robo : equipe.getRobos()) {
+                    if (CalcularTempo.tempoAtual().isBefore(getTempoFinal())) {
+
+                        System.out.println("Chamou tudo");
+                        robo.getControladorUtilizado().andar(robo,terrenoDados);
+                        System.out.println("Não Chamou tudo");
+
+                        System.out.printf("--> Nome: %s%n", robo.getNome());
+                        System.out.printf("--> Direção: %s%n", robo.getDirecaoRobo());
+                        System.out.printf("--> Coordenada atual: [%d, %d]%n", robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
+                        System.out.printf("--> Volume de hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
+                        System.out.printf("--> Rugosidade da célula: %.2f%n", terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getRugosidade());
+                        System.out.printf("--> Volume de hélio-3 da célula: %.2f%n", terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getConcentracaoHelio());
+                        long minutos = CalcularTempo.tempoFaltante(tempoFinal).toMinutes();
+                        System.out.printf("--> Tempo faltante: %02d:%02d%n", minutos, CalcularTempo.tempoFaltante(tempoFinal).minusMinutes(minutos).getSeconds());
+                        System.out.println();
+
+                        CalcularTempo.sleep(1);
+                    }
+                }
+            }
+        }
+        System.out.printf("-> Tempo de partida encerrado.%n");
+
+    }
 
 //    public void finalizarPartida() {
 //        Equipe equipeVencedora = null;

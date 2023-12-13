@@ -2,6 +2,7 @@ package robos;
 
 import carroceria.Carroceria;
 import ambiente.Terreno;
+import ambiente.Celula;
 import controladores.Controlador;
 import funcionalidades.CalcularTempo;
 import sondas.Sonda;
@@ -24,35 +25,49 @@ public abstract class Robo {
     }
 
     public void andarParaFrente(Terreno terreno) {
-        int novaPosX = posicaoAtualX;
-        int novaPosY = posicaoAtualY;
+        int novaPosX = getPosicaoAtualX();
+        int novaPosY = getPosicaoAtualY();
 
-        if (direcaoRobo.equals("NORTE")) {
+        if (getDirecaoRobo().equals("NORTE")) {
             novaPosY++;
-        } else if (direcaoRobo.equals("SUL")) {
+        } else if (getDirecaoRobo().equals("SUL")) {
             novaPosY--;
-        } else if (direcaoRobo.equals("LESTE")) {
+        } else if (getDirecaoRobo().equals("LESTE")) {
             novaPosX++;
-        } else if (direcaoRobo.equals("OESTE")) {
+        } else if (getDirecaoRobo().equals("OESTE")) {
             novaPosX--;
         }
 
-        terreno.getCelula(posicaoAtualX, posicaoAtualY).setRoboPresente(false);
+        terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY()).setRoboPresente(false);
 
-        posicaoAtualX = novaPosX;
-        posicaoAtualY = novaPosY;
+        setPosicaoAtualX(novaPosX);
+        setPosicaoAtualY(novaPosY);
 
-        terreno.getCelula(posicaoAtualX, posicaoAtualY).setRoboPresente(true);
+        terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY()).setRoboPresente(true);
     }
 
-    public abstract void prospeccao(Terreno terreno);
+    public void prospeccao(Terreno terreno){
+        Celula celulaAtual = terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY());
+        //int atualX = posicaoAtualX;
+        //int atualY = posicaoAtualY;
+
+        double concentracao = celulaAtual.getConcentracaoHelio();
+        double volumeProspectado = celulaAtual.getConcentracaoHelio();
+
+        volumeHelioProspectado += volumeProspectado;
+
+        celulaAtual.setConcentracaoHelio(0);
+
+        int segundos = (int) (10 * concentracao);
+        CalcularTempo.sleep(segundos);
+    };
 
     public void direcaoParaDireita(Robo robo) {
-        if (direcaoRobo.equals("NORTE")) {
+        if (getDirecaoRobo().equals("NORTE")) {
             robo.setDirecaoRobo("LESTE");
-        } else if (direcaoRobo.equals("LESTE")) {
+        } else if (getDirecaoRobo().equals("LESTE")) {
             robo.setDirecaoRobo("SUL");
-        } else if (direcaoRobo.equals("SUL")) {
+        } else if (getDirecaoRobo().equals("SUL")) {
             robo.setDirecaoRobo("OESTE");
         } else {
             robo.setDirecaoRobo("NORTE");
@@ -60,11 +75,11 @@ public abstract class Robo {
     }
 
     public void direcaoParaEsquerda(Robo robo) {
-        if (direcaoRobo.equals("NORTE")) {
+        if (getDirecaoRobo().equals("NORTE")) {
             robo.setDirecaoRobo("OESTE");
-        } else if (direcaoRobo.equals("OESTE")) {
+        } else if (getDirecaoRobo().equals("OESTE")) {
             robo.setDirecaoRobo("SUL");
-        } else if (direcaoRobo.equals("SUL")) {
+        } else if (getDirecaoRobo().equals("SUL")) {
             robo.setDirecaoRobo("LESTE");
         } else {
             robo.setDirecaoRobo("NORTE");
@@ -72,8 +87,9 @@ public abstract class Robo {
     }
 
     public boolean movimentoValido(String direcao, Terreno terreno){
-        int novaPosX = posicaoAtualX;
-        int novaPosY = posicaoAtualY;
+        int novaPosX = getPosicaoAtualX();
+        int novaPosY = getPosicaoAtualY();
+        System.out.printf("Chegou aqui : %s", direcao);
 
         if (direcao.equals("NORTE")) {
             novaPosY++;

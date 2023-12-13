@@ -16,9 +16,9 @@ public class ControladorRoboFTT extends Controlador {
         int seletorLado = 0;
         int posicaoAtualX = robo.getPosicaoAtualX();
         int posicaoAtualY = robo.getPosicaoAtualY();
-        double maiorQuantidade = sensorHelioDisponivel(robo, celula);
+        // double maiorQuantidade = sensorHelioDisponivel(robo, celula);
 
-        if()
+        // if()
 
 
         if (seletorLado == 0) {

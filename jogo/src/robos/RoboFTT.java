@@ -25,11 +25,6 @@ public class RoboFTT extends Robo {
     }
 
     @Override
-    public boolean movimentoValido(String direcao, Terreno terreno) {
-        return false;
-    }
-
-    @Override
     public void descarregarHelio() {
 
     }

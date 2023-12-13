@@ -16,10 +16,4 @@ public class ControladorRoboV extends Controlador {
 
     }
 
-    @Override
-    public double sensorHelioDisponivel(Robo robo, Terreno terreno) {
-        return 0;
-    }
-
-
 }

@@ -12,23 +12,18 @@ public class RoboXYZ extends Robo {
 
     @Override
     public void andarParaFrente(Terreno terreno) {
-        if(getSonda().podeSondar()){ // Caso sondar, ele não possui um intervalo reduzido
-            int segundos = (int) (1 * terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualX()).getRugosidade());
-            CalcularTempo.sleep(segundos);
-        }else{
-            int segundos = (int) (10 * terreno.getCelula(posicaoInicialX, posicaoAtualY).getRugosidade());
-            CalcularTempo.sleep(segundos);
-        }
+//        if(getSonda().podeSondar()){ // Caso sondar, ele não possui um intervalo reduzido
+//            int segundos = (int) (1 * terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualX()).getRugosidade());
+//            CalcularTempo.sleep(segundos);
+//        }else{
+//            int segundos = (int) (10 * terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY()).getRugosidade());
+//            CalcularTempo.sleep(segundos);
+//        }
     }
 
     @Override
     public void prospeccao(Terreno terreno) {
 
-    }
-
-    @Override
-    public boolean movimentoValido(String direcao, Terreno terreno) {
-        return false;
     }
 
     @Override

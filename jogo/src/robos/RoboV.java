@@ -20,11 +20,6 @@ public class RoboV extends Robo {
     }
 
     @Override
-    public boolean movimentoValido(String direcao, Terreno terreno) {
-        return false;
-    }
-
-    @Override
     public void descarregarHelio() {
 
     }
