@@ -114,9 +114,7 @@ public class Partida {
             }
         }
         configuracaoDados.setEquipes(equipes);
-
     }
-
 
     public void jogabilidadeRobos(){
 
@@ -128,9 +126,7 @@ public class Partida {
                 for (Robo robo : equipe.getRobos()) {
                     if (CalcularTempo.tempoAtual().isBefore(getTempoFinal())) {
 
-                        System.out.println("Chamou tudo");
                         robo.getControladorUtilizado().andar(robo,terrenoDados);
-                        System.out.println("Não Chamou tudo");
 
                         System.out.printf("--> Nome: %s%n", robo.getNome());
                         System.out.printf("--> Direção: %s%n", robo.getDirecaoRobo());

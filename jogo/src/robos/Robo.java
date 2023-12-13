@@ -16,6 +16,7 @@ public abstract class Robo {
     private Controlador controladorUtilizado;
     private Carroceria carroceria;
     private Sonda sonda;
+    private double mutiplicadorErro = 1;
 
     public Robo(String nome, int posicaoInicialX, int posicaoInicialY) {
         this.nome = nome;
@@ -48,8 +49,6 @@ public abstract class Robo {
 
     public void prospeccao(Terreno terreno){
         Celula celulaAtual = terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY());
-        //int atualX = posicaoAtualX;
-        //int atualY = posicaoAtualY;
 
         double concentracao = celulaAtual.getConcentracaoHelio();
         double volumeProspectado = celulaAtual.getConcentracaoHelio();
@@ -89,7 +88,7 @@ public abstract class Robo {
     public boolean movimentoValido(String direcao, Terreno terreno){
         int novaPosX = getPosicaoAtualX();
         int novaPosY = getPosicaoAtualY();
-        System.out.printf("Chegou aqui : %s", direcao);
+        //System.out.printf("Chegou aqui : %s", direcao);
 
         if (direcao.equals("NORTE")) {
             novaPosY++;
@@ -166,6 +165,13 @@ public abstract class Robo {
         this.controladorUtilizado = controladorUtilizado;
     }
 
+    public double getMutiplicadorErro() {
+        return mutiplicadorErro;
+    }
+
+    public void setMutiplicadorErro(double mutiplicadorErro) {
+        this.mutiplicadorErro = mutiplicadorErro;
+    }
     public Carroceria getCarroceria() {
         return carroceria;
     }
