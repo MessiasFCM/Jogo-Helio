@@ -12,11 +12,6 @@ public class ControladorRoboV extends Controlador {
     }
 
     @Override
-    public void iniciarProspeccao(Robo robo, Terreno terreno) {
-
-    }
-
-    @Override
     public void andar(Robo robo, Terreno terreno) {
 
     }

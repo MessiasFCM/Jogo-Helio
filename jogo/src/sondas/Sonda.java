@@ -4,17 +4,15 @@ import ambiente.Terreno;
 import robos.Robo;
 
 public abstract class Sonda {
-    protected String nome;
-    protected int operacoesDeExtracao;
+    protected int operacoesDeSonda;
 
-    public Sonda(String nome) {
-        this.nome = nome;
-        this.operacoesDeExtracao = 2; // Valor padrão máximo de operações
+    public Sonda() {
+        this.operacoesDeSonda = 2; // Valor padrão máximo de operações
     }
 
-    public abstract void aplicarEfeito(Robo robo);
+    public abstract boolean aplicarEfeito(Robo robo);
 
-    public boolean podeExtrair() {
-        return operacoesDeExtracao > 0;
+    public boolean podeSondar() {
+        return operacoesDeSonda > 0;
     }
 }

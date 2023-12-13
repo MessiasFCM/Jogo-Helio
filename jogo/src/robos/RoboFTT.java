@@ -2,6 +2,7 @@ package robos;
 
 import ambiente.Terreno;
 import controladores.ControladorRoboFTT;
+import funcionalidades.CalcularTempo;
 
 public class RoboFTT extends Robo {
     public RoboFTT(String nome, int posicaoInicialX, int posicaoInicialY) {
@@ -16,7 +17,11 @@ public class RoboFTT extends Robo {
 
     @Override
     public void prospeccao(Terreno terreno) {
+        if(getSonda().podeSondar()){ // Caso sondar, ele extrai o hélio total da celula
 
+        }else{
+
+        }
     }
 
     @Override

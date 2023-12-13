@@ -2,6 +2,7 @@ package robos;
 
 import ambiente.Terreno;
 import controladores.ControladorRoboXYZ;
+import funcionalidades.CalcularTempo;
 
 public class RoboXYZ extends Robo {
     public RoboXYZ(String nome, int posicaoInicialX, int posicaoInicialY) {
@@ -11,7 +12,13 @@ public class RoboXYZ extends Robo {
 
     @Override
     public void andarParaFrente(Terreno terreno) {
-
+        if(getSonda().podeSondar()){ // Caso sondar, ele não possui um intervalo reduzido
+            int segundos = (int) (1 * terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualX()).getRugosidade());
+            CalcularTempo.sleep(segundos);
+        }else{
+            int segundos = (int) (10 * terreno.getCelula(posicaoInicialX, posicaoAtualY).getRugosidade());
+            CalcularTempo.sleep(segundos);
+        }
     }
 
     @Override

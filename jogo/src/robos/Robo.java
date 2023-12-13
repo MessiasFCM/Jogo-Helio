@@ -3,6 +3,7 @@ package robos;
 import carroceria.Carroceria;
 import ambiente.Terreno;
 import controladores.Controlador;
+import funcionalidades.CalcularTempo;
 import sondas.Sonda;
 
 public abstract class Robo {
@@ -22,29 +23,76 @@ public abstract class Robo {
         this.posicaoAtualY = posicaoInicialY;
     }
 
-    public void moverParaDirecao(String direcao, Terreno terreno) {
-        if (movimentoValido(direcao, terreno)) {
-            switch (direcao) {
-                case "NORTE":
-                    posicaoAtualY--;
-                    break;
-                case "SUL":
-                    posicaoAtualY++;
-                    break;
-                case "LESTE":
-                    posicaoAtualX++;
-                    break;
-                case "OESTE":
-                    posicaoAtualX--;
-                    break;
-            }
+    public void andarParaFrente(Terreno terreno) {
+        int novaPosX = posicaoAtualX;
+        int novaPosY = posicaoAtualY;
+
+        if (direcaoRobo.equals("NORTE")) {
+            novaPosY++;
+        } else if (direcaoRobo.equals("SUL")) {
+            novaPosY--;
+        } else if (direcaoRobo.equals("LESTE")) {
+            novaPosX++;
+        } else if (direcaoRobo.equals("OESTE")) {
+            novaPosX--;
         }
+
+        terreno.getCelula(posicaoAtualX, posicaoAtualY).setRoboPresente(false);
+
+        posicaoAtualX = novaPosX;
+        posicaoAtualY = novaPosY;
+
+        terreno.getCelula(posicaoAtualX, posicaoAtualY).setRoboPresente(true);
     }
-    public abstract void andarParaFrente(Terreno terreno);
 
     public abstract void prospeccao(Terreno terreno);
 
-    public abstract boolean movimentoValido(String direcao, Terreno terreno);
+    public void direcaoParaDireita(Robo robo) {
+        if (direcaoRobo.equals("NORTE")) {
+            robo.setDirecaoRobo("LESTE");
+        } else if (direcaoRobo.equals("LESTE")) {
+            robo.setDirecaoRobo("SUL");
+        } else if (direcaoRobo.equals("SUL")) {
+            robo.setDirecaoRobo("OESTE");
+        } else {
+            robo.setDirecaoRobo("NORTE");
+        }
+    }
+
+    public void direcaoParaEsquerda(Robo robo) {
+        if (direcaoRobo.equals("NORTE")) {
+            robo.setDirecaoRobo("OESTE");
+        } else if (direcaoRobo.equals("OESTE")) {
+            robo.setDirecaoRobo("SUL");
+        } else if (direcaoRobo.equals("SUL")) {
+            robo.setDirecaoRobo("LESTE");
+        } else {
+            robo.setDirecaoRobo("NORTE");
+        }
+    }
+
+    public boolean movimentoValido(String direcao, Terreno terreno){
+        int novaPosX = posicaoAtualX;
+        int novaPosY = posicaoAtualY;
+
+        if (direcao.equals("NORTE")) {
+            novaPosY++;
+        } else if (direcao.equals("SUL")) {
+            novaPosY--;
+        } else if (direcao.equals("LESTE")) {
+            novaPosX++;
+        } else if (direcao.equals("OESTE")) {
+            novaPosX--;
+        } else {
+            return false;
+        }
+
+        if (novaPosX < 0 || novaPosX >= terreno.getLargura() || novaPosY < 0 || novaPosY >= terreno.getAltura() || terreno.getCelulas()[novaPosX][novaPosY].isRoboPresente()) {
+            return false;
+        }
+
+        return true;
+    };
 
     public void descarregarHelio() {
         if (carroceria != null) {

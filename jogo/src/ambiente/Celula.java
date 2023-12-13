@@ -16,7 +16,6 @@ public class Celula {
         this.roboPresente = false;
         this.roboProspectando = false;
     }
-
     public double getConcentracaoHelio() {
         return concentracaoHelio;
     }

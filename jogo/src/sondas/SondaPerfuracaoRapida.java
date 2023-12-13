@@ -4,20 +4,16 @@ import ambiente.Terreno;
 import robos.Robo;
 import robos.RoboXYZ;
 
-public class SondaPerfuracaoRapida extends Sonda {
-    public SondaPerfuracaoRapida() {
-        super("Perfuração Rápida");
-    }
+// Sonda do robô XYZ
 
+public class SondaPerfuracaoRapida extends Sonda {
     @Override
-    public void aplicarEfeito(Robo robo) {
-        if (robo instanceof RoboXYZ) {
-            RoboXYZ roboXYZ = (RoboXYZ) robo;
-            if (podeExtrair()) {
-                // Implemente a lógica de aplicação do efeito para a SondaPerfuracaoRapida no RoboXYZ
-                // ...
-                operacoesDeExtracao--;
-            }
+    public boolean aplicarEfeito(Robo robo) {
+        if (podeSondar()) {
+            operacoesDeSonda--;
+            return true;
+        }else{
+            return false;
         }
     }
 }

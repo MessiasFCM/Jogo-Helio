@@ -2,7 +2,7 @@ package controladores;
 
 import ambiente.Terreno;
 import robos.Robo;
-import robos.RoboXYZ;
+import java.util.Random;
 
 public class ControladorRoboXYZ extends Controlador {
     @Override
@@ -11,19 +11,34 @@ public class ControladorRoboXYZ extends Controlador {
     }
 
     @Override
-    public void iniciarProspeccao(Robo robo, Terreno terreno) {
-
-    }
-
-    @Override
     public void andar(Robo robo, Terreno terreno) {
 
+        Random geradorAleatorio = new Random();
+        int seletorLado = geradorAleatorio.nextInt(3);
+
+        if (seletorLado == 0) {
+            robo.direcaoParaDireita(robo);
+            if (robo.movimentoValido(robo.getDirecaoRobo(), terreno)) {
+                robo.andarParaFrente(terreno);
+                iniciarProspeccao(robo, terreno);
+            } else {
+                andar(robo, terreno);
+            }
+        } else if (seletorLado == 1) {
+            robo.direcaoParaEsquerda(robo);
+            if (robo.movimentoValido(robo.getDirecaoRobo(), terreno)) {
+                robo.andarParaFrente(terreno);
+                iniciarProspeccao(robo, terreno);
+            } else {
+                andar(robo, terreno);
+            }
+        } else {
+            if (robo.movimentoValido(robo.getDirecaoRobo(), terreno)) {
+                robo.andarParaFrente(terreno);
+                iniciarProspeccao(robo, terreno);
+            } else {
+                andar(robo, terreno);
+            }
+        }
     }
-
-    @Override
-    public double sensorHelioDisponivel(Robo robo, Terreno terreno) {
-        return 0;
-    }
-
-
 }
