@@ -17,6 +17,4 @@ public abstract class Controlador {
     public void iniciarProspeccao(Robo robo, Terreno terreno){
         robo.prospeccao((terreno));
     };
-
-    // Adicione outras funções comuns a todos os controladores, se necessário
 }

@@ -16,7 +16,11 @@ public abstract class Robo {
     private Controlador controladorUtilizado;
     private Carroceria carroceria;
     private Sonda sonda;
-    private double mutiplicadorErro = 1;
+    private double velocidadeExtracao = 1.0; // Velocidade de extração do robô, onde 1.0 representa 100% (padrão).
+    private double agilidadeNaMovimentacao = 1.0; // Agilidade na movimentação do robô, onde 1.0 representa 100% (padrão).
+    private double porcentagemCarga = 1.0; // Porcentagem de carga do robô, onde 1.0 representa 100% (padrão).
+    private double mutiplicadorErro = 1.0; // Multiplicador de erro do robô, onde 1.0 representa 100% (padrão).
+
 
     public Robo(String nome, int posicaoInicialX, int posicaoInicialY) {
         this.nome = nome;
@@ -29,15 +33,10 @@ public abstract class Robo {
         int novaPosX = getPosicaoAtualX();
         int novaPosY = getPosicaoAtualY();
 
-        if (getDirecaoRobo().equals("NORTE")) {
-            novaPosY++;
-        } else if (getDirecaoRobo().equals("SUL")) {
-            novaPosY--;
-        } else if (getDirecaoRobo().equals("LESTE")) {
-            novaPosX++;
-        } else if (getDirecaoRobo().equals("OESTE")) {
-            novaPosX--;
-        }
+        if (getDirecaoRobo().equals("NORTE")) { novaPosY++; }
+        else if (getDirecaoRobo().equals("SUL")) { novaPosY--; }
+        else if (getDirecaoRobo().equals("LESTE")) { novaPosX++; }
+        else if (getDirecaoRobo().equals("OESTE")) { novaPosX--; }
 
         terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY()).setRoboPresente(false);
 
@@ -49,7 +48,6 @@ public abstract class Robo {
 
     public void prospeccao(Terreno terreno){
         Celula celulaAtual = terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY());
-
         double concentracao = celulaAtual.getConcentracaoHelio();
         double volumeProspectado = celulaAtual.getConcentracaoHelio();
 
@@ -59,7 +57,7 @@ public abstract class Robo {
 
         int segundos = (int) (10 * concentracao);
         CalcularTempo.sleep(segundos);
-    };
+    }
 
     public void direcaoParaDireita(Robo robo) {
         if (getDirecaoRobo().equals("NORTE")) {
@@ -88,26 +86,23 @@ public abstract class Robo {
     public boolean movimentoValido(String direcao, Terreno terreno){
         int novaPosX = getPosicaoAtualX();
         int novaPosY = getPosicaoAtualY();
-        //System.out.printf("Chegou aqui : %s", direcao);
 
-        if (direcao.equals("NORTE")) {
-            novaPosY++;
-        } else if (direcao.equals("SUL")) {
-            novaPosY--;
-        } else if (direcao.equals("LESTE")) {
-            novaPosX++;
-        } else if (direcao.equals("OESTE")) {
-            novaPosX--;
-        } else {
+        if (direcao.equals("NORTE")) { novaPosY++; }
+        else if (direcao.equals("SUL")) { novaPosY--; }
+        else if (direcao.equals("LESTE")) { novaPosX++; }
+        else if (direcao.equals("OESTE")) { novaPosX--; }
+        else { return false; }
+
+        if (posicaoForaDosLimites(novaPosX, novaPosY, terreno) || terreno.getCelulas()[novaPosX][novaPosY].isRoboPresente()) {
             return false;
+        }else{
+            return true;
         }
+    }
 
-        if (novaPosX < 0 || novaPosX >= terreno.getLargura() || novaPosY < 0 || novaPosY >= terreno.getAltura() || terreno.getCelulas()[novaPosX][novaPosY].isRoboPresente()) {
-            return false;
-        }
-
-        return true;
-    };
+    private boolean posicaoForaDosLimites(int x, int y, Terreno terreno) {
+        return x < 0 || x >= terreno.getLargura() || y < 0 || y >= terreno.getAltura();
+    }
 
     public void descarregarHelio() {
         if (carroceria != null) {
@@ -116,6 +111,8 @@ public abstract class Robo {
         System.out.println(nome + " realizou uma operação de descarga de Hélio-3.");
         System.out.println("Carga atual: " + volumeHelioProspectado);
     }
+
+    // Métodos get e set + toString
 
     public String getNome() {
         return nome;
@@ -165,13 +162,6 @@ public abstract class Robo {
         this.controladorUtilizado = controladorUtilizado;
     }
 
-    public double getMutiplicadorErro() {
-        return mutiplicadorErro;
-    }
-
-    public void setMutiplicadorErro(double mutiplicadorErro) {
-        this.mutiplicadorErro = mutiplicadorErro;
-    }
     public Carroceria getCarroceria() {
         return carroceria;
     }
@@ -188,6 +178,38 @@ public abstract class Robo {
         this.sonda = sonda;
     }
 
+    public double getVelocidadeExtracao() {
+        return velocidadeExtracao;
+    }
+
+    public void setVelocidadeExtracao(double velocidadeExtracao) {
+        this.velocidadeExtracao = velocidadeExtracao;
+    }
+
+    public double getAgilidadeNaMovimentacao() {
+        return agilidadeNaMovimentacao;
+    }
+
+    public void setAgilidadeNaMovimentacao(double agilidadeNaMovimentacao) {
+        this.agilidadeNaMovimentacao = agilidadeNaMovimentacao;
+    }
+
+    public double getPorcentagemCarga() {
+        return porcentagemCarga;
+    }
+
+    public void setPorcentagemCarga(double porcentagemCarga) {
+        this.porcentagemCarga = porcentagemCarga;
+    }
+
+    public double getMutiplicadorErro() {
+        return mutiplicadorErro;
+    }
+
+    public void setMutiplicadorErro(double mutiplicadorErro) {
+        this.mutiplicadorErro = mutiplicadorErro;
+    }
+
     @Override
     public String toString() {
         return "Robo{" +
@@ -199,6 +221,10 @@ public abstract class Robo {
                 ", controladorUtilizado=" + controladorUtilizado +
                 ", carroceria=" + carroceria +
                 ", sonda=" + sonda +
+                ", velocidadeExtracao=" + velocidadeExtracao +
+                ", agilidadeNaMovimentacao=" + agilidadeNaMovimentacao +
+                ", porcentagemCarga=" + porcentagemCarga +
+                ", mutiplicadorErro=" + mutiplicadorErro +
                 '}';
     }
 }

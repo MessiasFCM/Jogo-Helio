@@ -7,28 +7,29 @@ import funcionalidades.CalcularTempo;
 public class RoboXYZ extends Robo {
     public RoboXYZ(String nome, int posicaoInicialX, int posicaoInicialY) {
         super(nome, posicaoInicialX, posicaoInicialY);
-        this.setControladorUtilizado(new ControladorRoboXYZ());
+        setControladorUtilizado(new ControladorRoboXYZ());
+        configurarRoboXYZ();
+    }
+
+    private void configurarRoboXYZ() {
+        setVelocidadeExtracao(2.0);
+        setAgilidadeNaMovimentacao(1.5);
+        setPorcentagemCarga(0.5);
+        setMutiplicadorErro(1.2);
     }
 
     @Override
     public void andarParaFrente(Terreno terreno) {
-//        if(getSonda().podeSondar()){ // Caso sondar, ele não possui um intervalo reduzido
-//            int segundos = (int) (1 * terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualX()).getRugosidade());
-//            CalcularTempo.sleep(segundos);
-//        }else{
-//            int segundos = (int) (10 * terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY()).getRugosidade());
-//            CalcularTempo.sleep(segundos);
-//        }
+        super.andarParaFrente(terreno);
     }
 
     @Override
     public void prospeccao(Terreno terreno) {
-
+        super.prospeccao(terreno);
     }
 
     @Override
     public void descarregarHelio() {
-
+        super.descarregarHelio();
     }
-
 }

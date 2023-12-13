@@ -15,6 +15,8 @@ public class Equipe {
         this.robos = new ArrayList<>();
     }
 
+    // Métodos get e set + toString
+
     public String getNome() {
         return nome;
     }
@@ -30,6 +32,7 @@ public class Equipe {
     public void setRobos(ArrayList<Robo> robos) {
         this.robos = robos;
     }
+
     public ArrayList<String> getTipoRobos() {
         return tipoRobos;
     }
@@ -43,7 +46,7 @@ public class Equipe {
         return "Equipe{" +
                 "nome='" + nome + '\'' +
                 ", robos=" + robos +
-                ", tipos=" + tipoRobos +
+                ", tipoRobos=" + tipoRobos +
                 '}';
     }
 }

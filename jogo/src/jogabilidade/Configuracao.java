@@ -6,6 +6,8 @@ public class Configuracao {
     private int tempoPartida;
     private ArrayList<Equipe> equipes;
 
+    // Métodos get e set + toString
+
     public int getTempoPartida() {
         return tempoPartida;
     }
@@ -20,5 +22,13 @@ public class Configuracao {
 
     public void setEquipes(ArrayList<Equipe> equipes) {
         this.equipes = equipes;
+    }
+
+    @Override
+    public String toString() {
+        return "Configuracao{" +
+                "tempoPartida=" + tempoPartida +
+                ", equipes=" + equipes +
+                '}';
     }
 }

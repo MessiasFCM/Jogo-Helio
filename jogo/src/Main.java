@@ -9,7 +9,7 @@ public class Main {
         Partida partida = new Partida();
         partida.inicializarJogo();
         partida.jogabilidadeRobos();
-        // partida.finalizarPartida();
+        partida.finalizarPartida();
 
         // "tipoRobos": ["XYZ CARROCERIA", "XYZ SONDA", "FFT CARROCERIA", "FFT", "V CARROCERIA SONDA", "V"]
         // "tipoRobos": ["XYZ CARROCERIA", "XYZ SONDA", "XYZ", "FFT CARROCERIA", "FFT", "V CARROCERIA SONDA", "V"]

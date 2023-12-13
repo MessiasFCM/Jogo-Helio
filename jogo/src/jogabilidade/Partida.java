@@ -1,5 +1,6 @@
 package jogabilidade;
 
+import ambiente.Celula;
 import ambiente.Terreno;
 import carroceria.CarroceriaFortaleza;
 import carroceria.CarroceriaNavegacaoAvancada;
@@ -35,11 +36,14 @@ public class Partida {
         ArrayList<Equipe> equipes = new ArrayList<>();
         Random random = new Random();
 
-        System.out.printf("Relatório Inicial:%n%n");
+        System.out.printf("========================================%n");
+        System.out.printf("========== Relatório Inicial ===========%n");
+        System.out.printf("========================================%n%n");
+
         for (Equipe equipe : configuracaoDados.getEquipes()) {
             ArrayList<Robo> robos = new ArrayList<>();
             int contadorTipoXYZ = 0, contadorTipoFFT = 0, contadorTipoV = 0;
-            System.out.printf("-> Equipe %s%n%n", equipe.getNome());
+            System.out.printf("===== Equipe: %s =====%n%n", equipe.getNome());
             for (int contador = 0; contador < equipe.getTipoRobos().size(); contador++) {
                 int posicaoX, posicaoY;
                 do {
@@ -84,20 +88,25 @@ public class Partida {
                         contadorTipoV++;
                         break;
                     default:
-                        System.out.println("-> Erro ao definir tipo para robo");
+                        System.out.println("==> Erro ao definir tipo para robo");
                         break;
                 }
                 robos.add(robo);
 
-                System.out.printf("--> Nome: %s%n", robo.getNome());
-                System.out.printf("--> Direção: %s%n", robo.getDirecaoRobo());
-                System.out.printf("--> Coordenada: [%d, %d]%n", robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-                System.out.printf("--> Controlador sendo utilizado: %s%n", robo.getControladorUtilizado().nomeControlador());
-                System.out.printf("--> Volume de hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
-                System.out.printf("--> Rugosidade da célula %.2f%n", terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getRugosidade());
-                System.out.printf("--> Volume de hélio-3 da célula: %.2f%n", terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getConcentracaoHelio());
+                System.out.println("=== Informações do Robô ===");
+                System.out.printf("Nome: %s%n", robo.getNome());
+                System.out.printf("Direção: %s%n", robo.getDirecaoRobo());
+                System.out.printf("Coordenada: [%d, %d]%n", robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
+                System.out.printf("Controlador: %s%n", robo.getControladorUtilizado().nomeControlador());
+                System.out.printf("Volume de Hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
+
+                Celula celulaAtual = terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
+                System.out.printf("Rugosidade da célula: %.2f%n", celulaAtual.getRugosidade());
+                System.out.printf("Volume de Hélio-3 da célula: %.2f%n", celulaAtual.getConcentracaoHelio());
+
                 long minutos = CalcularTempo.tempoFaltante(tempoFinal).toMinutes();
-                System.out.printf("--> Tempo faltante: %02d:%02d%n", minutos, CalcularTempo.tempoFaltante(tempoFinal).minusMinutes(minutos).getSeconds());
+                System.out.printf("Tempo faltante: %02d:%02d%n", minutos, CalcularTempo.tempoFaltante(tempoFinal).minusMinutes(minutos).getSeconds());
+
                 System.out.println();
 
                 int segundos = (int) (10 * getTerrenoDados().getCelula(posicaoX, posicaoY).getRugosidade());
@@ -108,9 +117,9 @@ public class Partida {
 
             // Verificação Equipe
             if (contadorTipoXYZ >= 2 && contadorTipoFFT >= 2 && contadorTipoV >= 2) {
-                System.out.printf("-> Equipe %s atende aos requisitos.%n", equipe.getNome());
+                System.out.printf("==> Equipe %s atende aos requisitos.%n", equipe.getNome());
             } else {
-                System.out.printf("-> Equipe %s não possui o mínimo de 2 robôs de cada tipo.%n", equipe.getNome());
+                System.out.printf("==> Equipe %s não possui o mínimo de 2 robôs de cada tipo.%n", equipe.getNome());
             }
         }
         configuracaoDados.setEquipes(equipes);
@@ -118,24 +127,31 @@ public class Partida {
 
     public void jogabilidadeRobos(){
 
-        System.out.printf("Relatórios Momentâneos:%n%n");
+        System.out.printf("========================================%n");
+        System.out.printf("======== Relatório Momentâneo ==========%n");
+        System.out.printf("========================================%n%n");
 
         while (CalcularTempo.tempoAtual().isBefore(getTempoFinal())) {
             for (Equipe equipe : configuracaoDados.getEquipes()) {
-                System.out.printf("-> Equipe %s:%n%n", equipe.getNome());
+                System.out.printf("===== Equipe: %s =====%n%n", equipe.getNome());
                 for (Robo robo : equipe.getRobos()) {
                     if (CalcularTempo.tempoAtual().isBefore(getTempoFinal())) {
 
                         robo.getControladorUtilizado().andar(robo,terrenoDados);
 
-                        System.out.printf("--> Nome: %s%n", robo.getNome());
-                        System.out.printf("--> Direção: %s%n", robo.getDirecaoRobo());
-                        System.out.printf("--> Coordenada atual: [%d, %d]%n", robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-                        System.out.printf("--> Volume de hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
-                        System.out.printf("--> Rugosidade da célula: %.2f%n", terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getRugosidade());
-                        System.out.printf("--> Volume de hélio-3 da célula: %.2f%n", terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getConcentracaoHelio());
+                        System.out.println("=== Informações do Robô ===");
+                        System.out.printf("Nome: %s%n", robo.getNome());
+                        System.out.printf("Direção: %s%n", robo.getDirecaoRobo());
+                        System.out.printf("Coordenada atual: [%d, %d]%n", robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
+                        System.out.printf("Volume de Hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
+
+                        Celula celulaAtual = terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
+                        System.out.printf("Rugosidade da célula: %.2f%n", celulaAtual.getRugosidade());
+                        System.out.printf("Volume de Hélio-3 da célula: %.2f%n", celulaAtual.getConcentracaoHelio());
+
                         long minutos = CalcularTempo.tempoFaltante(tempoFinal).toMinutes();
-                        System.out.printf("--> Tempo faltante: %02d:%02d%n", minutos, CalcularTempo.tempoFaltante(tempoFinal).minusMinutes(minutos).getSeconds());
+                        System.out.printf("Tempo faltante: %02d:%02d%n", minutos, CalcularTempo.tempoFaltante(tempoFinal).minusMinutes(minutos).getSeconds());
+
                         System.out.println();
 
                         CalcularTempo.sleep(1);
@@ -143,32 +159,37 @@ public class Partida {
                 }
             }
         }
-        System.out.printf("-> Tempo de partida encerrado.%n");
+        System.out.printf("==> Tempo de partida encerrado.%n");
 
     }
 
-//    public void finalizarPartida() {
-//        Equipe equipeVencedora = null;
-//        double maiorVolumeHelio = 0;
-//
-//        System.out.printf("%nRelatório Final:%n");
-//        for (Equipe equipe : configuracaoDados.getEquipes()) {
-//            double volumeTotalHelioEquipe = 0;
-//            for (Robo robo : equipe.getRobos()) {
-//                volumeTotalHelioEquipe += robo.getVolumeHelioProspectado();
-//            }
-//            System.out.printf("--> A equipe %s prospectou %.2f de hélio-3%n", equipe.getNome(), volumeTotalHelioEquipe);
-//            if (volumeTotalHelioEquipe > maiorVolumeHelio) {
-//                maiorVolumeHelio = volumeTotalHelioEquipe;
-//                equipeVencedora = equipe;
-//            }
-//        }
-//        if (equipeVencedora != null) {
-//            System.out.printf("%n-> A equipe %s venceu a partida!%n", equipeVencedora.getNome());
-//        } else {
-//            System.out.println("%n-> A partida terminou em empate");
-//        }
-//    }
+    public void finalizarPartida() {
+        Equipe equipeVencedora = null;
+        double maiorVolumeHelio = 0;
+
+        System.out.printf("========================================%n");
+        System.out.printf("=========== Relatório Final ============%n");
+        System.out.printf("========================================%n%n");
+
+        for (Equipe equipe : configuracaoDados.getEquipes()) {
+            double volumeTotalHelioEquipe = 0;
+            for (Robo robo : equipe.getRobos()) {
+                volumeTotalHelioEquipe += robo.getVolumeHelioProspectado();
+            }
+            System.out.printf("=====> A equipe %s prospectou %.2f de hélio-3%n", equipe.getNome(), volumeTotalHelioEquipe);
+            if (volumeTotalHelioEquipe > maiorVolumeHelio) {
+                maiorVolumeHelio = volumeTotalHelioEquipe;
+                equipeVencedora = equipe;
+            }
+        }
+        if (equipeVencedora != null) {
+            System.out.printf("%n===== A equipe %s venceu a partida! =====%n", equipeVencedora.getNome());
+        } else {
+            System.out.printf("%n===== A partida terminou em empate =====%n");
+        }
+    }
+
+    // Métodos get e set + toString
 
     public Configuracao getConfiguracaoDados() {
         return configuracaoDados;
