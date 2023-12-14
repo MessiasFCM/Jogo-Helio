@@ -15,6 +15,6 @@ public class RoboV extends Robo {
         setVelocidadeExtracao(1.0);
         setAgilidadeNaMovimentacao(1.0);
         setPorcentagemCarga(1.0);
-        setErroPrecisaoLeitura(0);
+        setErroPrecisaoLeitura(1.0);
     }
 }

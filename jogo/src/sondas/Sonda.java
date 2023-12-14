@@ -8,6 +8,9 @@ import java.util.Random;
 
 public class Sonda {
     protected String nome;
+    public Sonda(String nome) {
+        this.nome = nome;
+    }
 
     public double calculoHelioDisponivel(Robo robo, Terreno terreno) {
         Celula celulaAtual = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
@@ -15,10 +18,6 @@ public class Sonda {
         double erro = coeficientesErro[0] + new Random().nextDouble() * (coeficientesErro[1] - coeficientesErro[0]);
         double concentracao = celulaAtual.getConcentracaoHelio();
         return robo.getErroPrecisaoLeitura() * concentracao + (concentracao * erro);
-    }
-
-    public Sonda(String nome) {
-        this.nome = nome;
     }
     public boolean movimentoValido(Robo robo, String direcao, Terreno terreno){
         int novaPosX = robo.getPosicaoAtualX();
@@ -56,7 +55,6 @@ public class Sonda {
             double concentracaoComErro = robo.getErroPrecisaoLeitura() * celula.getConcentracaoHelio() + (celula.getConcentracaoHelio() * erro);
             maiorQuantidadeHelio = concentracaoComErro;
             lado = "OESTE";
-            System.out.println("Lado: OESTE:" + concentracaoComErro);
         }
         if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX() - 1, robo.getPosicaoAtualY())){
             Celula celula = terreno.getCelula(robo.getPosicaoAtualX() - 1, robo.getPosicaoAtualY());
@@ -69,7 +67,6 @@ public class Sonda {
                 maiorQuantidadeHelio = concentracaoComErro;
                 lado = "LESTE";
             }
-            System.out.println("Lado: LESTE: " + concentracaoComErro);
         }
         if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() + 1)){
             Celula celula = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() + 1);
@@ -82,7 +79,6 @@ public class Sonda {
                 maiorQuantidadeHelio = concentracaoComErro;
                 lado = "NORTE";
             }
-            System.out.println("Lado: NORTE: " + concentracaoComErro);
         }
         if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() - 1)){
             Celula celula = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() - 1);
@@ -95,9 +91,27 @@ public class Sonda {
                 maiorQuantidadeHelio = concentracaoComErro;
                 lado = "SUL";
             }
-            System.out.println("Lado: SUL: " + concentracaoComErro);
         }
 
         return lado;
+    }
+
+    public void verificarExecucoes(Robo robo){}
+
+    // Métodos get e set + toString
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return "Sonda{" +
+                "nome='" + nome + '\'' +
+                '}';
     }
 }

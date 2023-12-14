@@ -17,27 +17,12 @@ public class ControladorRoboXYZ extends Controlador {
 
         if (seletorLado == 0) {
             direcaoParaDireita(robo);
-            if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
-            } else {
-                andar(robo, terreno);
-            }
+            validar(robo, terreno);
         } else if (seletorLado == 1) {
             direcaoParaEsquerda(robo);
-            if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
-            } else {
-                andar(robo, terreno);
-            }
+            validar(robo, terreno);
         } else {
-            if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
-            } else {
-                andar(robo, terreno);
-            }
+            validar(robo, terreno);
         }
     }
 }

@@ -75,16 +75,4 @@ public class ControladorRoboFTT extends Controlador {
             }
         }
     }
-
-    // ---------------------
-    // Parece que estão toda hr sempre chegando no ultimo else, e isso ta dando erro
-    // --------------------
-    public void validar(Robo robo, Terreno terreno){
-        if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
-            andarParaFrente(robo, terreno);
-            iniciarProspeccao(robo, terreno);
-        } else {
-            andar(robo, terreno);
-        }
-    }
 }

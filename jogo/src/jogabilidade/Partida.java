@@ -6,10 +6,10 @@ import carroceria.Carroceria;
 import carroceria.CarroceriaFortaleza;
 import carroceria.CarroceriaNavegacaoAvancada;
 import carroceria.CarroceriaTurbo;
+import funcionalidades.ExibirRelatorios;
 import lerDados.*;
 import funcionalidades.CalcularTempo;
 import robos.*;
-import controladores.*;
 import sondas.Sonda;
 import sondas.SondaAltaCapacidade;
 import sondas.SondaPerfuracaoRapida;
@@ -25,96 +25,51 @@ public class Partida {
     private LocalDateTime tempoFinal;
 
     public Partida() {
+        inicializarPartida();
+    }
+
+    private void inicializarPartida() {
         CarregarDados dados = new CarregarDados();
         DadosProcessados dadosProcessados = dados.carregarDados();
         LocalDateTime tempoInicial = CalcularTempo.tempoAtual();
+
         // Variáveis do sistema
         this.configuracaoDados = dadosProcessados.getConfiguracao();
         this.terrenoDados = dadosProcessados.getTerreno();
-        this.tempoFinal = tempoInicial.plusMinutes(dadosProcessados.getConfiguracao().getTempoPartida());
-    }
-
-    public void inicializarJogo() {
-        ArrayList<Equipe> equipes = new ArrayList<>();
-        Random random = new Random();
+        this.tempoFinal = tempoInicial.plusMinutes(configuracaoDados.getTempoPartida());
 
         System.out.printf("========================================%n");
         System.out.printf("========== Relatório Inicial ===========%n");
         System.out.printf("========================================%n%n");
 
+        criarRobos();
+    }
+
+    public void criarRobos() {
+        ArrayList<Equipe> equipes = new ArrayList<>();
+        ExibirRelatorios exibirRelatorios = new ExibirRelatorios();
+        Random random = new Random();
+
         for (Equipe equipe : configuracaoDados.getEquipes()) {
             ArrayList<Robo> robos = new ArrayList<>();
-            int contadorTipoXYZ = 0, contadorTipoFFT = 0, contadorTipoV = 0;
             System.out.printf("===== Equipe: %s =====%n%n", equipe.getNome());
-            for (int contador = 0; contador < equipe.getTipoRobos().size(); contador++) {
+            int contadorTipos = 0;
+            for (String tipoRobo : equipe.getTipoRobos()) {
                 int posicaoX, posicaoY;
                 do {
                     posicaoX = random.nextInt(terrenoDados.getLargura());
                     posicaoY = random.nextInt(terrenoDados.getAltura());
                 } while (terrenoDados.getCelula(posicaoX, posicaoY).isRoboPresente());
 
+
                 terrenoDados.getCelula(posicaoX, posicaoY).setRoboPresente(true);
 
-                Robo robo = null;
-                boolean possuiCarroceria, possuiSonda;
+                Robo robo = criarRobo(tipoRobo, contadorTipos, posicaoX, posicaoY);
+                contadorTipos++;
 
-                String tipoRobo = equipe.getTipoRobos().get(contador);
-                String[] tipoECarroceria = tipoRobo.split(" ");
-                String tipo = tipoECarroceria[0];
-                if(tipoECarroceria.length>2){
-                    possuiCarroceria = tipoECarroceria.length > 1 && tipoECarroceria[1].equals("CARROCERIA");
-                    possuiSonda = tipoECarroceria.length > 2 && tipoECarroceria[2].equals("SONDA");
-                }else{
-                    possuiCarroceria = tipoECarroceria.length > 1 && tipoECarroceria[1].equals("CARROCERIA");
-                    possuiSonda = tipoECarroceria.length > 1 && tipoECarroceria[1].equals("SONDA");
-                }
-
-                switch (tipo) {
-                    case "XYZ":
-                        robo = new RoboXYZ("RoboXYZ " + contador, posicaoX, posicaoY);
-                        if(possuiCarroceria){ robo.setCarroceria(new CarroceriaTurbo(robo)); }
-                        else{robo.setCarroceria(new Carroceria("Padrão"));}
-                        if(possuiSonda){ robo.setSonda(new SondaPerfuracaoRapida(robo)); }
-                        else{ robo.setSonda(new Sonda("Padrão")); }
-                        contadorTipoXYZ++;
-                        break;
-                    case "FTT":
-                        robo = new RoboFTT("RoboFTT " + contador, posicaoX, posicaoY);
-                        if(possuiCarroceria){ robo.setCarroceria(new CarroceriaFortaleza(robo)); }
-                        else{robo.setCarroceria(new Carroceria("Padrão"));}
-                        if(possuiSonda){ robo.setSonda(new SondaAltaCapacidade(robo)); }
-                        else{ robo.setSonda(new Sonda("Padrão")); }
-                        contadorTipoFFT++;
-                        break;
-                    case "V":
-                        robo = new RoboV("RoboV " + contador, posicaoX, posicaoY);
-                        if(possuiCarroceria){ robo.setCarroceria(new CarroceriaNavegacaoAvancada(robo)); }
-                        else{robo.setCarroceria(new Carroceria("Padrão"));}
-                        if(possuiSonda){ robo.setSonda(new SondaPrecisao(robo)); }
-                        else{ robo.setSonda(new Sonda("Padrão")); }
-                        contadorTipoV++;
-                        break;
-                    default:
-                        System.out.println("==> Erro ao definir tipo para robo");
-                        break;
-                }
                 robos.add(robo);
 
-                System.out.println("=== Informações do Robô ===");
-                System.out.printf("Nome: %s%n", robo.getNome());
-                System.out.printf("Direção: %s%n", robo.getDirecaoRobo());
-                System.out.printf("Coordenada: [%d, %d]%n", robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-                System.out.printf("Controlador: %s%n", robo.getControladorUtilizado().nomeControlador());
-                System.out.printf("Volume de Hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
-
-                Celula celulaAtual = terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-                System.out.printf("Rugosidade da célula: %.2f%n", celulaAtual.getRugosidade());
-                System.out.printf("Volume de Hélio-3 da célula: %.2f%n", celulaAtual.getConcentracaoHelio());
-
-                long minutos = CalcularTempo.tempoFaltante(tempoFinal).toMinutes();
-                System.out.printf("Tempo faltante: %02d:%02d%n", minutos, CalcularTempo.tempoFaltante(tempoFinal).minusMinutes(minutos).getSeconds());
-
-                System.out.println();
+                exibirRelatorios.exibirRelatoriosRoboIniciais(robo, terrenoDados, tempoFinal);
 
                 int segundos = (int) (10 * getTerrenoDados().getCelula(posicaoX, posicaoY).getRugosidade());
                 CalcularTempo.sleep(segundos);
@@ -122,17 +77,72 @@ public class Partida {
             equipe.setRobos(robos);
             equipes.add(equipe);
 
-            // Verificação Equipe
-            if (contadorTipoXYZ >= 2 && contadorTipoFFT >= 2 && contadorTipoV >= 2) {
-                System.out.printf("==> Equipe %s atende aos requisitos.%n", equipe.getNome());
-            } else {
-                System.out.printf("==> Equipe %s não possui o mínimo de 2 robôs de cada tipo.%n", equipe.getNome());
-            }
+            verificarEquipe(equipe);
         }
         configuracaoDados.setEquipes(equipes);
     }
 
+    private Robo criarRobo(String tipoRobo, int contadorTipos, int posicaoX, int posicaoY) {
+        String[] tipoECarroceria = tipoRobo.split(" ");
+        String tipo = tipoECarroceria[0];
+        boolean possuiCarroceria, possuiSonda;
+        possuiCarroceria = tipoECarroceria.length > 1 && tipoECarroceria[1].equals("CARROCERIA");
+        if(tipoECarroceria.length>2){
+            possuiSonda = tipoECarroceria.length > 2 && tipoECarroceria[2].equals("SONDA");
+        }else{
+            possuiSonda = tipoECarroceria.length > 1 && tipoECarroceria[1].equals("SONDA");
+        }
+
+        switch (tipo) {
+            case "XYZ":
+                return criarRoboXYZ(posicaoX, contadorTipos, posicaoY, possuiCarroceria, possuiSonda);
+            case "FTT":
+                return criarRoboFTT(posicaoX, contadorTipos, posicaoY, possuiCarroceria, possuiSonda);
+            case "V":
+                return criarRoboV(posicaoX, contadorTipos, posicaoY, possuiCarroceria, possuiSonda);
+            default:
+                throw new IllegalArgumentException("Tipo de robô inválido: " + tipo);
+        }
+    }
+
+    private Robo criarRoboXYZ(int posicaoX, int contadorTipos, int posicaoY, boolean possuiCarroceria, boolean possuiSonda) {
+        RoboXYZ robo = new RoboXYZ("RoboXYZ " + contadorTipos, posicaoX, posicaoY);
+        robo.setCarroceria(possuiCarroceria ? new CarroceriaTurbo(robo) : new Carroceria("Padrão"));
+        robo.setSonda(possuiSonda ? new SondaPerfuracaoRapida(robo) : new Sonda("Padrão"));
+        return robo;
+    }
+
+    private Robo criarRoboFTT(int posicaoX, int contadorTipos, int posicaoY, boolean possuiCarroceria, boolean possuiSonda) {
+        RoboFTT robo = new RoboFTT("RoboFTT " + contadorTipos, posicaoX, posicaoY);
+        robo.setCarroceria(possuiCarroceria ? new CarroceriaFortaleza(robo) : new Carroceria("Padrão"));
+        robo.setSonda(possuiSonda ? new SondaAltaCapacidade(robo) : new Sonda("Padrão"));
+        return robo;
+    }
+
+    private Robo criarRoboV(int posicaoX, int contadorTipos, int posicaoY, boolean possuiCarroceria, boolean possuiSonda) {
+        RoboV robo = new RoboV("RoboV " + contadorTipos, posicaoX, posicaoY);
+        robo.setCarroceria(possuiCarroceria ? new CarroceriaNavegacaoAvancada(robo) : new Carroceria("Padrão"));
+        robo.setSonda(possuiSonda ? new SondaPrecisao(robo) : new Sonda("Padrão"));
+        return robo;
+    }
+
+    private void verificarEquipe(Equipe equipe) {
+        int contadorTipoXYZ = countRobosByType(equipe, "XYZ");
+        int contadorTipoFTT = countRobosByType(equipe, "FTT");
+        int contadorTipoV = countRobosByType(equipe, "V");
+
+        if (contadorTipoXYZ >= 2 && contadorTipoFTT >= 2 && contadorTipoV >= 2) {
+            System.out.printf("==> Equipe %s atende aos requisitos.%n", equipe.getNome());
+        } else {
+            System.out.printf("==> Equipe %s não possui o mínimo de 2 robôs de cada tipo.%n", equipe.getNome());
+        }
+    }
+
+    private int countRobosByType(Equipe equipe, String tipo) {
+        return (int) equipe.getRobos().stream().filter(robo -> robo.getNome().startsWith("Robo" + tipo)).count();
+    }
     public void jogabilidadeRobos(){
+        ExibirRelatorios exibirRelatorios = new ExibirRelatorios();
 
         System.out.printf("========================================%n");
         System.out.printf("======== Relatório Momentâneo ==========%n");
@@ -142,37 +152,19 @@ public class Partida {
             for (Equipe equipe : configuracaoDados.getEquipes()) {
                 System.out.printf("===== Equipe: %s =====%n%n", equipe.getNome());
                 for (Robo robo : equipe.getRobos()) {
-                    if (CalcularTempo.tempoAtual().isBefore(getTempoFinal())) {
-
-                        robo.getControladorUtilizado().andar(robo,terrenoDados);
-
-                        System.out.println("=== Informações do Robô ===");
-                        System.out.printf("Nome: %s%n", robo.getNome());
-                        System.out.printf("Direção: %s%n", robo.getDirecaoRobo());
-                        System.out.printf("Coordenada atual: [%d, %d]%n", robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-                        double totalHelio = robo.getVolumeHelioProspectadoTotal() + robo.getVolumeHelioProspectado();
-                        System.out.printf("Volume de Hélio-3 total prospectado: %.2f barris%n", totalHelio);
-                        System.out.printf("Carga de Hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
-
-                        Celula celulaAtual = terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-                        System.out.printf("Rugosidade da célula: %.2f%n", celulaAtual.getRugosidade());
-                        System.out.printf("Volume de Hélio-3 da célula: %.2f%n", celulaAtual.getConcentracaoHelio());
-
-                        long minutos = CalcularTempo.tempoFaltante(tempoFinal).toMinutes();
-                        System.out.printf("Tempo faltante: %02d:%02d%n", minutos, CalcularTempo.tempoFaltante(tempoFinal).minusMinutes(minutos).getSeconds());
-
-                        System.out.println();
-
+                    if (CalcularTempo.tempoAtual().isBefore(tempoFinal)) {
+                        robo.getControladorUtilizado().andar(robo, terrenoDados);
+                        exibirRelatorios.exibirInformacoesRoboMomentaneas(robo, terrenoDados, tempoFinal);
                         CalcularTempo.sleep(1);
                     }
                 }
             }
         }
-        System.out.printf("==> Tempo de partida encerrado.%n");
-
+        System.out.printf("==> Tempo de partida encerrado.%n%n");
+        finalizarPartida();
     }
 
-    public void finalizarPartida() {
+    private  void finalizarPartida() {
         Equipe equipeVencedora = null;
         double maiorVolumeHelio = 0;
 
@@ -181,11 +173,9 @@ public class Partida {
         System.out.printf("========================================%n%n");
 
         for (Equipe equipe : configuracaoDados.getEquipes()) {
-            double volumeTotalHelioEquipe = 0;
-            for (Robo robo : equipe.getRobos()) {
-                volumeTotalHelioEquipe += robo.getVolumeHelioProspectado() + robo.getVolumeHelioProspectadoTotal();
-            }
+            double volumeTotalHelioEquipe = calcularVolumeTotalHelioEquipe(equipe);
             System.out.printf("=====> A equipe %s prospectou %.2f de hélio-3%n", equipe.getNome(), volumeTotalHelioEquipe);
+
             if (volumeTotalHelioEquipe > maiorVolumeHelio) {
                 maiorVolumeHelio = volumeTotalHelioEquipe;
                 equipeVencedora = equipe;
@@ -196,6 +186,12 @@ public class Partida {
         } else {
             System.out.printf("%n===== A partida terminou em empate =====%n");
         }
+    }
+
+    private double calcularVolumeTotalHelioEquipe(Equipe equipe) {
+        return equipe.getRobos().stream()
+                .mapToDouble(robo -> robo.getVolumeHelioProspectado() + robo.getVolumeHelioProspectadoTotal())
+                .sum();
     }
 
     // Métodos get e set + toString

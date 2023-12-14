@@ -31,6 +31,9 @@ public class Carroceria {
             robo.setVolumeHelioProspectado(totalProspectado);
             celulaAtual.setConcentracaoHelio(0);
         }
+
+        robo.getSonda().verificarExecucoes(robo);
+
         int segundos = (int) ((10 * concentracao) * robo.getVelocidadeExtracao());
         CalcularTempo.sleep(segundos);
     }

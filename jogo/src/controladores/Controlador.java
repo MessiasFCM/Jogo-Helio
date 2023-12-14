@@ -58,4 +58,12 @@ public abstract class Controlador {
             robo.setDirecaoRobo("NORTE");
         }
     }
+
+    public void validar(Robo robo, Terreno terreno){
+        if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
+            andarParaFrente(robo, terreno);
+            iniciarProspeccao(robo, terreno);
+        }
+    }
 }
+
