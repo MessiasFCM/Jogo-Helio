@@ -9,7 +9,7 @@ public class CarroceriaNavegacaoAvancada extends Carroceria{
         if (robo instanceof RoboV) {
             RoboV roboV = (RoboV) robo;
 
-            // Aumento de 30% na precisão das leituras de concentração
+            // 30% melhor na precisão das leituras de concentração
             double novaPrecisaoLeitura = roboV.getErroPrecisaoLeitura() * 0.7;
             roboV.setErroPrecisaoLeitura(novaPrecisaoLeitura);
 

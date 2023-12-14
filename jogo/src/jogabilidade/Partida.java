@@ -10,6 +10,7 @@ import lerDados.*;
 import funcionalidades.CalcularTempo;
 import robos.*;
 import controladores.*;
+import sondas.Sonda;
 import sondas.SondaAltaCapacidade;
 import sondas.SondaPerfuracaoRapida;
 import sondas.SondaPrecisao;
@@ -73,21 +74,24 @@ public class Partida {
                         robo = new RoboXYZ("RoboXYZ " + contador, posicaoX, posicaoY);
                         if(possuiCarroceria){ robo.setCarroceria(new CarroceriaTurbo(robo)); }
                         else{robo.setCarroceria(new Carroceria("Padrão"));}
-                        if(possuiSonda){ robo.setSonda(new SondaPerfuracaoRapida()); }
+                        if(possuiSonda){ robo.setSonda(new SondaPerfuracaoRapida(robo)); }
+                        else{ robo.setSonda(new Sonda("Padrão")); }
                         contadorTipoXYZ++;
                         break;
                     case "FTT":
                         robo = new RoboFTT("RoboFTT " + contador, posicaoX, posicaoY);
                         if(possuiCarroceria){ robo.setCarroceria(new CarroceriaFortaleza(robo)); }
                         else{robo.setCarroceria(new Carroceria("Padrão"));}
-                        if(possuiSonda){ robo.setSonda(new SondaAltaCapacidade()); }
+                        if(possuiSonda){ robo.setSonda(new SondaAltaCapacidade(robo)); }
+                        else{ robo.setSonda(new Sonda("Padrão")); }
                         contadorTipoFFT++;
                         break;
                     case "V":
                         robo = new RoboV("RoboV " + contador, posicaoX, posicaoY);
                         if(possuiCarroceria){ robo.setCarroceria(new CarroceriaNavegacaoAvancada(robo)); }
                         else{robo.setCarroceria(new Carroceria("Padrão"));}
-                        if(possuiSonda){ robo.setSonda(new SondaPrecisao()); }
+                        if(possuiSonda){ robo.setSonda(new SondaPrecisao(robo)); }
+                        else{ robo.setSonda(new Sonda("Padrão")); }
                         contadorTipoV++;
                         break;
                     default:

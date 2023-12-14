@@ -17,7 +17,7 @@ public class ControladorRoboXYZ extends Controlador {
 
         if (seletorLado == 0) {
             direcaoParaDireita(robo);
-            if (movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
+            if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
                 andarParaFrente(robo, terreno);
                 iniciarProspeccao(robo, terreno);
             } else {
@@ -25,14 +25,14 @@ public class ControladorRoboXYZ extends Controlador {
             }
         } else if (seletorLado == 1) {
             direcaoParaEsquerda(robo);
-            if (movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
+            if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
                 andarParaFrente(robo, terreno);
                 iniciarProspeccao(robo, terreno);
             } else {
                 andar(robo, terreno);
             }
         } else {
-            if (movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
+            if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
                 andarParaFrente(robo, terreno);
                 iniciarProspeccao(robo, terreno);
             } else {

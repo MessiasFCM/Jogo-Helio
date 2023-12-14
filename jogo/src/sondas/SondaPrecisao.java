@@ -5,13 +5,16 @@ import robos.Robo;
 import robos.RoboV;
 
 public class SondaPrecisao extends Sonda {
-    @Override
-    public boolean aplicarEfeito(Robo robo) {
-        if (podeSondar()) {
-            operacoesDeSonda--;
-            return true;
-        }else{
-            return false;
+    private static int contadorExecucoes = 0;
+    public SondaPrecisao(Robo robo) {
+        super("Precisão");
+        if (contadorExecucoes < 2 && robo instanceof RoboV) {
+            RoboV roboV = (RoboV) robo;
+
+            // Sem erros na leitura
+            roboV.setErroPrecisaoLeitura(1);
+
+            contadorExecucoes++;
         }
     }
 }

@@ -15,7 +15,7 @@ public class Carroceria {
 
     public void prospeccao(Robo robo, Terreno terreno){
         Celula celulaAtual = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-        double concentracao = celulaAtual.getConcentracaoHelio();
+        double concentracao = robo.getSonda().calculoHelioDisponivel(robo, terreno);
         double volumeProspectado = robo.getVolumeHelioProspectado();
         double cargaTotalEfeitos = cargaTotal * robo.getPorcentagemCarga();
 

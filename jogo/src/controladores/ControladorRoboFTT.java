@@ -15,80 +15,76 @@ public class ControladorRoboFTT extends Controlador {
     @Override
     public void andar(Robo robo, Terreno terreno) {
 
-        String seletorLado = buscaMaiorQuantidadeHelio(robo, terreno);
+        String seletorLado = robo.getSonda().buscaMaiorQuantidadeHelio(robo, terreno);
 
         if (seletorLado.equals("OESTE")) {
             if(robo.getDirecaoRobo().equals("NORTE")) {
                 direcaoParaDireita(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else if(robo.getDirecaoRobo().equals("OESTE")) {
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else if(robo.getDirecaoRobo().equals("SUL")) {
                 direcaoParaEsquerda(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else {
                 direcaoParaEsquerda(robo);
                 direcaoParaEsquerda(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             }
         } else if (seletorLado.equals("LESTE")) {
             if(robo.getDirecaoRobo().equals("NORTE")) {
                 direcaoParaEsquerda(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else if(robo.getDirecaoRobo().equals("OESTE")) {
                 direcaoParaEsquerda(robo);
                 direcaoParaEsquerda(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else if(robo.getDirecaoRobo().equals("SUL")) {
                 direcaoParaDireita(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else {
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             }
         } else if (seletorLado.equals("NORTE")){
             if(robo.getDirecaoRobo().equals("NORTE")) {
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else if(robo.getDirecaoRobo().equals("OESTE")) {
                 direcaoParaEsquerda(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else if(robo.getDirecaoRobo().equals("SUL")) {
                 direcaoParaDireita(robo);
                 direcaoParaDireita(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else {
                 direcaoParaDireita(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             }
         } else {
             if(robo.getDirecaoRobo().equals("NORTE")) {
                 direcaoParaDireita(robo);
                 direcaoParaDireita(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else if(robo.getDirecaoRobo().equals("OESTE")) {
                 direcaoParaDireita(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else if(robo.getDirecaoRobo().equals("SUL")) {
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             } else {
                 direcaoParaEsquerda(robo);
-                andarParaFrente(robo, terreno);
-                iniciarProspeccao(robo, terreno);
+                validar(robo,terreno);
             }
+        }
+    }
+
+    // ---------------------
+    // Parece que estão toda hr sempre chegando no ultimo else, e isso ta dando erro
+    // --------------------
+    public void validar(Robo robo, Terreno terreno){
+        if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
+            andarParaFrente(robo, terreno);
+            iniciarProspeccao(robo, terreno);
+        } else {
+            andar(robo, terreno);
         }
     }
 }

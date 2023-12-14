@@ -9,8 +9,8 @@ public class CarroceriaTurbo extends Carroceria {
         if (robo instanceof RoboXYZ) {
             RoboXYZ roboXYZ = (RoboXYZ) robo;
 
-            // Aumento de 20% na velocidade de deslocamento
-            double novaVelocidade = roboXYZ.getAgilidadeNaMovimentacao() * 1.2;
+            // 20% mais rápido na velocidade de deslocamento
+            double novaVelocidade = roboXYZ.getAgilidadeNaMovimentacao() * 0.8;
             roboXYZ.setAgilidadeNaMovimentacao(novaVelocidade);
 
             // Redução de 50% no tempo necessário para descargas
