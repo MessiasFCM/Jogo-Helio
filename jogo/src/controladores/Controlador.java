@@ -63,6 +63,9 @@ public abstract class Controlador {
         if (robo.getSonda().movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
             andarParaFrente(robo, terreno);
             iniciarProspeccao(robo, terreno);
+            if(robo.getControladorUtilizado().nomeControlador().equals("Controlador V")){
+                andar(robo, terreno);
+            }
         }
     }
 }

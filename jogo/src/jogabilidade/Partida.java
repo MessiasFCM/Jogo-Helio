@@ -132,9 +132,9 @@ public class Partida {
         int contadorTipoV = countRobosByType(equipe, "V");
 
         if (contadorTipoXYZ >= 2 && contadorTipoFTT >= 2 && contadorTipoV >= 2) {
-            System.out.printf("==> Equipe %s atende aos requisitos.%n", equipe.getNome());
+            System.out.printf("==> Equipe %s atende aos requisitos.%n%n", equipe.getNome());
         } else {
-            System.out.printf("==> Equipe %s não possui o mínimo de 2 robôs de cada tipo.%n", equipe.getNome());
+            System.out.printf("==> Equipe %s não possui o mínimo de 2 robôs de cada tipo.%n%n", equipe.getNome());
         }
     }
 

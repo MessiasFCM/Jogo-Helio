@@ -17,6 +17,10 @@ public class ControladorRoboFTT extends Controlador {
 
         String seletorLado = robo.getSonda().buscaMaiorQuantidadeHelio(robo, terreno);
 
+        if(seletorLado.equals("NULL")){
+            return;
+        }
+
         if (seletorLado.equals("OESTE")) {
             if(robo.getDirecaoRobo().equals("NORTE")) {
                 direcaoParaDireita(robo);
