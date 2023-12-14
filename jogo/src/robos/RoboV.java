@@ -19,11 +19,6 @@ public class RoboV extends Robo {
     }
 
     @Override
-    public void andarParaFrente(Terreno terreno) {
-        super.andarParaFrente(terreno);
-    }
-
-    @Override
     public void prospeccao(Terreno terreno) {
         super.prospeccao(terreno);
     }

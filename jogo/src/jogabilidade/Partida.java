@@ -75,7 +75,7 @@ public class Partida {
                         if(possuiSonda){ robo.setSonda(new SondaPerfuracaoRapida()); }
                         contadorTipoXYZ++;
                         break;
-                    case "FFT":
+                    case "FTT":
                         robo = new RoboFTT("RoboFTT " + contador, posicaoX, posicaoY);
                         if(possuiCarroceria){ robo.setCarroceria(new CarroceriaFortaleza()); }
                         if(possuiSonda){ robo.setSonda(new SondaAltaCapacidade()); }

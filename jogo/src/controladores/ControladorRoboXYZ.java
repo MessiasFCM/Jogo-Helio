@@ -16,24 +16,24 @@ public class ControladorRoboXYZ extends Controlador {
         int seletorLado = geradorAleatorio.nextInt(3);
 
         if (seletorLado == 0) {
-            robo.direcaoParaDireita(robo);
-            if (robo.movimentoValido(robo.getDirecaoRobo(), terreno)) {
-                robo.andarParaFrente(terreno);
+            direcaoParaDireita(robo);
+            if (movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
+                andarParaFrente(robo, terreno);
                 iniciarProspeccao(robo, terreno);
             } else {
                 andar(robo, terreno);
             }
         } else if (seletorLado == 1) {
-            robo.direcaoParaEsquerda(robo);
-            if (robo.movimentoValido(robo.getDirecaoRobo(), terreno)) {
-                robo.andarParaFrente(terreno);
+            direcaoParaEsquerda(robo);
+            if (movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
+                andarParaFrente(robo, terreno);
                 iniciarProspeccao(robo, terreno);
             } else {
                 andar(robo, terreno);
             }
         } else {
-            if (robo.movimentoValido(robo.getDirecaoRobo(), terreno)) {
-                robo.andarParaFrente(terreno);
+            if (movimentoValido(robo, robo.getDirecaoRobo(), terreno)) {
+                andarParaFrente(robo, terreno);
                 iniciarProspeccao(robo, terreno);
             } else {
                 andar(robo, terreno);

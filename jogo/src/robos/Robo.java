@@ -29,79 +29,20 @@ public abstract class Robo {
         this.posicaoAtualY = posicaoInicialY;
     }
 
-    public void andarParaFrente(Terreno terreno) {
-        int novaPosX = getPosicaoAtualX();
-        int novaPosY = getPosicaoAtualY();
-
-        if (getDirecaoRobo().equals("NORTE")) { novaPosY++; }
-        else if (getDirecaoRobo().equals("SUL")) { novaPosY--; }
-        else if (getDirecaoRobo().equals("LESTE")) { novaPosX++; }
-        else if (getDirecaoRobo().equals("OESTE")) { novaPosX--; }
-
-        terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY()).setRoboPresente(false);
-
-        setPosicaoAtualX(novaPosX);
-        setPosicaoAtualY(novaPosY);
-
-        terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY()).setRoboPresente(true);
-    }
-
     public void prospeccao(Terreno terreno){
         Celula celulaAtual = terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY());
         double concentracao = celulaAtual.getConcentracaoHelio();
         double volumeProspectado = celulaAtual.getConcentracaoHelio();
 
-        volumeHelioProspectado += volumeProspectado;
+        double cargaProspectada = volumeProspectado * porcentagemCarga;
+        volumeHelioProspectado += cargaProspectada;
 
-        celulaAtual.setConcentracaoHelio(0);
+        double sobraProspectada = cargaProspectada - volumeProspectado;
 
-        int segundos = (int) (10 * concentracao);
+        celulaAtual.setConcentracaoHelio(sobraProspectada);
+
+        int segundos = (int) ((10 * concentracao) * velocidadeExtracao);
         CalcularTempo.sleep(segundos);
-    }
-
-    public void direcaoParaDireita(Robo robo) {
-        if (getDirecaoRobo().equals("NORTE")) {
-            robo.setDirecaoRobo("LESTE");
-        } else if (getDirecaoRobo().equals("LESTE")) {
-            robo.setDirecaoRobo("SUL");
-        } else if (getDirecaoRobo().equals("SUL")) {
-            robo.setDirecaoRobo("OESTE");
-        } else {
-            robo.setDirecaoRobo("NORTE");
-        }
-    }
-
-    public void direcaoParaEsquerda(Robo robo) {
-        if (getDirecaoRobo().equals("NORTE")) {
-            robo.setDirecaoRobo("OESTE");
-        } else if (getDirecaoRobo().equals("OESTE")) {
-            robo.setDirecaoRobo("SUL");
-        } else if (getDirecaoRobo().equals("SUL")) {
-            robo.setDirecaoRobo("LESTE");
-        } else {
-            robo.setDirecaoRobo("NORTE");
-        }
-    }
-
-    public boolean movimentoValido(String direcao, Terreno terreno){
-        int novaPosX = getPosicaoAtualX();
-        int novaPosY = getPosicaoAtualY();
-
-        if (direcao.equals("NORTE")) { novaPosY++; }
-        else if (direcao.equals("SUL")) { novaPosY--; }
-        else if (direcao.equals("LESTE")) { novaPosX++; }
-        else if (direcao.equals("OESTE")) { novaPosX--; }
-        else { return false; }
-
-        if (posicaoForaDosLimites(novaPosX, novaPosY, terreno) || terreno.getCelulas()[novaPosX][novaPosY].isRoboPresente()) {
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-    private boolean posicaoForaDosLimites(int x, int y, Terreno terreno) {
-        return x < 0 || x >= terreno.getLargura() || y < 0 || y >= terreno.getAltura();
     }
 
     public void descarregarHelio() {

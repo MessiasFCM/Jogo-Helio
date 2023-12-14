@@ -4,6 +4,7 @@ import robos.Robo;
 import robos.RoboFTT;
 
 public class CarroceriaFortaleza extends Carroceria {
+    private double novaCapacidade;
     public CarroceriaFortaleza() {
         super("Fortaleza");
     }
@@ -12,8 +13,8 @@ public class CarroceriaFortaleza extends Carroceria {
     public void aplicarEfeito(Robo robo) {
         if (robo instanceof RoboFTT) {
             RoboFTT roboFTT = (RoboFTT) robo;
-            // Implemente a lógica de aplicação do efeito para a CarroceriaFortaleza no RoboFTT
-            // ...
+            double novaCapacidade = roboFTT.getCapacidadeCarga() * 2;
+            roboFTT.setCapacidadeCarga();
         }
     }
 }

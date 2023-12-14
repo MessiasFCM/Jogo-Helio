@@ -14,13 +14,8 @@ public class RoboFTT extends Robo {
     private void configurarRoboFTT() {
         setVelocidadeExtracao(0.6);
         setAgilidadeNaMovimentacao(0.3);
-        setPorcentagemCarga(3.0);
+        setCapacidadeCarga(3.0);
         setMutiplicadorErro(1.0);
-    }
-
-    @Override
-    public void andarParaFrente(Terreno terreno) {
-        super.andarParaFrente(terreno);
     }
 
     @Override

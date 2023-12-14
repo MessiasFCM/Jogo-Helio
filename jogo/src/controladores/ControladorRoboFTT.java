@@ -12,153 +12,143 @@ public class ControladorRoboFTT extends Controlador {
         return "Controlador FTT";
     }
 
+    public String buscaMaiorQuantidadeHelio(Robo robo, Terreno terreno) {
+
+        Random geradorAleatorio = new Random();
+        double maiorQuantidadeHelio = 0;
+        String lado = null;
+
+            if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX() + 1, robo.getPosicaoAtualY())) {
+                Celula celula = terreno.getCelula(robo.getPosicaoAtualX() + 1, robo.getPosicaoAtualY());
+
+                double erro = celula.getCoeficienteErroLeitura()[0] +
+                        geradorAleatorio.nextDouble() * (celula.getCoeficienteErroLeitura()[1] - celula.getCoeficienteErroLeitura()[0]);
+
+                double concentracaoComErro = robo.getMutiplicadorErro() * celula.getConcentracaoHelio() + (celula.getConcentracaoHelio() * erro);
+                maiorQuantidadeHelio = concentracaoComErro;
+                lado = "OESTE";
+                System.out.println("Lado: OESTE:" + concentracaoComErro);
+            }
+            if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX() - 1, robo.getPosicaoAtualY())){
+                Celula celula = terreno.getCelula(robo.getPosicaoAtualX() - 1, robo.getPosicaoAtualY());
+
+                double erro = celula.getCoeficienteErroLeitura()[0] +
+                        geradorAleatorio.nextDouble() * (celula.getCoeficienteErroLeitura()[1] - celula.getCoeficienteErroLeitura()[0]);
+
+                double concentracaoComErro = robo.getMutiplicadorErro() * celula.getConcentracaoHelio() + (celula.getConcentracaoHelio() * erro);
+                if(maiorQuantidadeHelio < concentracaoComErro){
+                    maiorQuantidadeHelio = concentracaoComErro;
+                    lado = "LESTE";
+                }
+                System.out.println("Lado: LESTE: " + concentracaoComErro);
+            }
+            if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() + 1)){
+                Celula celula = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() + 1);
+
+                double erro = celula.getCoeficienteErroLeitura()[0] +
+                        geradorAleatorio.nextDouble() * (celula.getCoeficienteErroLeitura()[1] - celula.getCoeficienteErroLeitura()[0]);
+
+                double concentracaoComErro = robo.getMutiplicadorErro() * celula.getConcentracaoHelio() + (celula.getConcentracaoHelio() * erro);
+                if(maiorQuantidadeHelio < concentracaoComErro){
+                    maiorQuantidadeHelio = concentracaoComErro;
+                    lado = "NORTE";
+                }
+                System.out.println("Lado: NORTE: " + concentracaoComErro);
+            }
+            if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() - 1)){
+                Celula celula = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() - 1);
+
+                double erro = celula.getCoeficienteErroLeitura()[0] +
+                        geradorAleatorio.nextDouble() * (celula.getCoeficienteErroLeitura()[1] - celula.getCoeficienteErroLeitura()[0]);
+
+                double concentracaoComErro = robo.getMutiplicadorErro() * celula.getConcentracaoHelio() + (celula.getConcentracaoHelio() * erro);
+                if(maiorQuantidadeHelio < concentracaoComErro){
+                    maiorQuantidadeHelio = concentracaoComErro;
+                    lado = "SUL";
+                }
+                System.out.println("Lado: SUL: " + concentracaoComErro);
+            }
+
+        return lado;
+    }
+
     @Override
     public void andar(Robo robo, Terreno terreno) {
 
-    }
+        String seletorLado = buscaMaiorQuantidadeHelio(robo, terreno);
 
-//    public int buscaMaiorQuantidadeHelio(Robo robo, Terreno terreno){
-//
-//        Celula celula = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-//        Random geradorAleatorio = new Random();
-//        double maiorQuantidadeHelio = 0;
-//
-//        if (robo.getDirecaoRobo().equals("NORTE")) {
-//                    double erro = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getCoeficienteErroLeitura()[0] +
-//                            geradorAleatorio.nextDouble() * (terreno.getCelula(robo.getPosicaoAtualX(),
-//                                    robo.getPosicaoAtualY()).getCoeficienteErroLeitura()[1] - terreno.getCelula(robo.getPosicaoAtualX(),
-//                                    robo.getPosicaoAtualY()).getCoeficienteErroLeitura()[0]);
-//                    double concentracaoComErro = robo.getMutiplicadorErro() * terreno.getCelula(robo.getPosicaoAtualX(),
-//                            robo.getPosicaoAtualY()).getConcentracaoHelio() + (terreno.getCelula(robo.getPosicaoAtualX(),
-//                            robo.getPosicaoAtualY()).getConcentracaoHelio() * erro);
-//        } else if (robo.getDirecaoRobo().equals("SUL")) {
-//
-//        } else if (robo.getDirecaoRobo().equals("LESTE")) {
-//
-//        } else if (robo.getDirecaoRobo().equals("OESTE")) {
-//
-//        }
-//
-//        public int buscaMaiorQuantidadeHelio(Robo robo, Terreno terreno) {
-//            int posicaoAtualX = robo.getPosicaoAtualX();
-//            int posicaoAtualY = robo.getPosicaoAtualY();
-//
-//            double maiorQuantidadeHelio = 0;
-//
-//            for (int i = 0; i < 3; i++) {
-//                int direcaoX = 0;
-//                int direcaoY = 0;
-//
-//                switch (robo.getDirecaoRobo()) {
-//                    case "NORTE":
-//                        direcaoY = -1;
-//                        break;
-//                    case "SUL":
-//                        direcaoY = 1;
-//                        break;
-//                    case "LESTE":
-//                        direcaoX = 1;
-//                        break;
-//                    case "OESTE":
-//                        direcaoX = -1;
-//                        break;
-//                    default:
-//                        System.out.println("Direção inválida");
-//                        return -1; // Ou outra ação apropriada para indicar erro
-//                }
-//
-//                int x = posicaoAtualX + direcaoX * (i + 1);
-//                int y = posicaoAtualY + direcaoY * (i + 1);
-//
-//                // Verifique se as coordenadas (x, y) estão dentro dos limites do terreno
-//                if (x >= 0 && x < terreno.getLargura() && y >= 0 && y < terreno.getAltura()) {
-//                    Celula celula = terreno.getCelula(x, y);
-//
-//                    // Faça a lógica para comparar a quantidade de Hélio na célula e atualize maiorQuantidadeHelio se necessário
-//                    double quantidadeHelio = celula.getConcentracaoHelio();
-//                    if (quantidadeHelio > maiorQuantidadeHelio) {
-//                        maiorQuantidadeHelio = quantidadeHelio;
-//                    }
-//                }
-//            }
-//
-//            return maiorQuantidadeHelio;
-//        }
-//
-//        // teste
-//
-//        int posicaoAtualX = robo.getPosicaoAtualX();
-//        int posicaoAtualY = robo.getPosicaoAtualY();
-//
-//        double maiorQuantidadeHelio = 0;
-//
-//        for (int i = 0; i < 3; i++) {
-//            int direcaoX = 0;
-//            int direcaoY = 0;
-//
-//            switch (robo.getDirecaoRobo()) {
-//                case "NORTE":
-//                    direcaoY = -1;
-//                    break;
-//                case "SUL":
-//                    direcaoY = 1;
-//                    break;
-//                case "LESTE":
-//                    direcaoX = 1;
-//                    break;
-//                case "OESTE":
-//                    direcaoX = -1;
-//                    break;
-//                default:
-//                    System.out.println("Direção inválida");
-//                    return -1; // Ou outra ação apropriada para indicar erro
-//            }
-//
-//            int x = posicaoAtualX + direcaoX * (i + 1);
-//            int y = posicaoAtualY + direcaoY * (i + 1);
-//
-//            // Verifique se as coordenadas (x, y) estão dentro dos limites do terreno
-//            if (x >= 0 && x < terreno.getLargura() && y >= 0 && y < terreno.getAltura()) {
-//                Celula celula = terreno.getCelula(x, y);
-//
-//                // Faça a lógica para comparar a quantidade de Hélio na célula e atualize maiorQuantidadeHelio se necessário
-//                double quantidadeHelio = celula.getConcentracaoHelio();
-//                if (quantidadeHelio > maiorQuantidadeHelio) {
-//                    maiorQuantidadeHelio = quantidadeHelio;
-//                }
-//            }
-//        }
-//
-//        return maiorQuantidadeHelio;
-//    }
-//    @Override
-//    public void andar(Robo robo, Terreno terreno) {
-//
-//        int seletorLado = buscaMaiorQuantidadeHelio(robo, terreno);
-//
-//        if (seletorLado == 0) {
-//            robo.direcaoParaDireita(robo);
-//            if (robo.movimentoValido(robo.getDirecaoRobo(), terreno)) {
-//                robo.andarParaFrente(terreno);
-//                iniciarProspeccao(robo, terreno);
-//            } else {
-//                andar(robo, terreno);
-//            }
-//        } else if (seletorLado == 1) {
-//            robo.direcaoParaEsquerda(robo);
-//            if (robo.movimentoValido(robo.getDirecaoRobo(), terreno)) {
-//                robo.andarParaFrente(terreno);
-//                iniciarProspeccao(robo, terreno);
-//            } else {
-//                andar(robo, terreno);
-//            }
-//        } else {
-//            if (robo.movimentoValido(robo.getDirecaoRobo(), terreno)) {
-//                robo.andarParaFrente(terreno);
-//                iniciarProspeccao(robo, terreno);
-//            } else {
-//                andar(robo, terreno);
-//            }
-//        }
-//    }
+        if (seletorLado.equals("OESTE")) {
+            if(robo.getDirecaoRobo().equals("NORTE")) {
+                direcaoParaDireita(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else if(robo.getDirecaoRobo().equals("OESTE")) {
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else if(robo.getDirecaoRobo().equals("SUL")) {
+                direcaoParaEsquerda(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else {
+                direcaoParaEsquerda(robo);
+                direcaoParaEsquerda(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            }
+        } else if (seletorLado.equals("LESTE")) {
+            if(robo.getDirecaoRobo().equals("NORTE")) {
+                direcaoParaEsquerda(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else if(robo.getDirecaoRobo().equals("OESTE")) {
+                direcaoParaEsquerda(robo);
+                direcaoParaEsquerda(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else if(robo.getDirecaoRobo().equals("SUL")) {
+                direcaoParaDireita(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else {
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            }
+        } else if (seletorLado.equals("NORTE")){
+            if(robo.getDirecaoRobo().equals("NORTE")) {
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else if(robo.getDirecaoRobo().equals("OESTE")) {
+                direcaoParaEsquerda(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else if(robo.getDirecaoRobo().equals("SUL")) {
+                direcaoParaDireita(robo);
+                direcaoParaDireita(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else {
+                direcaoParaDireita(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            }
+        } else {
+            if(robo.getDirecaoRobo().equals("NORTE")) {
+                direcaoParaDireita(robo);
+                direcaoParaDireita(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else if(robo.getDirecaoRobo().equals("OESTE")) {
+                direcaoParaDireita(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else if(robo.getDirecaoRobo().equals("SUL")) {
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            } else {
+                direcaoParaEsquerda(robo);
+                andarParaFrente(robo, terreno);
+                iniciarProspeccao(robo, terreno);
+            }
+        }
+    }
 }

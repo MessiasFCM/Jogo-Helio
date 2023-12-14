@@ -3,11 +3,11 @@
   "equipes": [
     {
       "nome": "Compilação Precoce",
-      "tipoRobos": ["XYZ SONDA", "XYZ", "XYZ CARROCERIA SONDA"]
+      "tipoRobos": ["XYZ SONDA", "FTT", "XYZ CARROCERIA SONDA"]
     },
     {
       "nome": "Bigode Grosso",
-      "tipoRobos": ["XYZ CARROCERIA", "XYZ CARROCERIA", "XYZ CARROCERIA SONDA"]
+      "tipoRobos": ["XYZ CARROCERIA", "FTT CARROCERIA", "XYZ CARROCERIA SONDA"]
     }
   ]
 }
