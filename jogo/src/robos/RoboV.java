@@ -15,16 +15,6 @@ public class RoboV extends Robo {
         setVelocidadeExtracao(1.0);
         setAgilidadeNaMovimentacao(1.0);
         setPorcentagemCarga(1.0);
-        setMutiplicadorErro(0);
-    }
-
-    @Override
-    public void prospeccao(Terreno terreno) {
-        super.prospeccao(terreno);
-    }
-
-    @Override
-    public void descarregarHelio() {
-        super.descarregarHelio();
+        setErroPrecisaoLeitura(0);
     }
 }

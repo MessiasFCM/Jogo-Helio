@@ -2,6 +2,7 @@ package jogabilidade;
 
 import ambiente.Celula;
 import ambiente.Terreno;
+import carroceria.Carroceria;
 import carroceria.CarroceriaFortaleza;
 import carroceria.CarroceriaNavegacaoAvancada;
 import carroceria.CarroceriaTurbo;
@@ -67,23 +68,25 @@ public class Partida {
                     possuiSonda = tipoECarroceria.length > 1 && tipoECarroceria[1].equals("SONDA");
                 }
 
-                
                 switch (tipo) {
                     case "XYZ":
                         robo = new RoboXYZ("RoboXYZ " + contador, posicaoX, posicaoY);
-                        if(possuiCarroceria){ robo.setCarroceria(new CarroceriaTurbo()); }
+                        if(possuiCarroceria){ robo.setCarroceria(new CarroceriaTurbo(robo)); }
+                        else{robo.setCarroceria(new Carroceria("Padrão"));}
                         if(possuiSonda){ robo.setSonda(new SondaPerfuracaoRapida()); }
                         contadorTipoXYZ++;
                         break;
                     case "FTT":
                         robo = new RoboFTT("RoboFTT " + contador, posicaoX, posicaoY);
-                        if(possuiCarroceria){ robo.setCarroceria(new CarroceriaFortaleza()); }
+                        if(possuiCarroceria){ robo.setCarroceria(new CarroceriaFortaleza(robo)); }
+                        else{robo.setCarroceria(new Carroceria("Padrão"));}
                         if(possuiSonda){ robo.setSonda(new SondaAltaCapacidade()); }
                         contadorTipoFFT++;
                         break;
                     case "V":
                         robo = new RoboV("RoboV " + contador, posicaoX, posicaoY);
-                        if(possuiCarroceria){ robo.setCarroceria(new CarroceriaNavegacaoAvancada()); }
+                        if(possuiCarroceria){ robo.setCarroceria(new CarroceriaNavegacaoAvancada(robo)); }
+                        else{robo.setCarroceria(new Carroceria("Padrão"));}
                         if(possuiSonda){ robo.setSonda(new SondaPrecisao()); }
                         contadorTipoV++;
                         break;
@@ -143,7 +146,9 @@ public class Partida {
                         System.out.printf("Nome: %s%n", robo.getNome());
                         System.out.printf("Direção: %s%n", robo.getDirecaoRobo());
                         System.out.printf("Coordenada atual: [%d, %d]%n", robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
-                        System.out.printf("Volume de Hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
+                        double totalHelio = robo.getVolumeHelioProspectadoTotal() + robo.getVolumeHelioProspectado();
+                        System.out.printf("Volume de Hélio-3 total prospectado: %.2f barris%n", totalHelio);
+                        System.out.printf("Carga de Hélio-3 prospectado: %.2f barris%n", robo.getVolumeHelioProspectado());
 
                         Celula celulaAtual = terrenoDados.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY());
                         System.out.printf("Rugosidade da célula: %.2f%n", celulaAtual.getRugosidade());
@@ -174,7 +179,7 @@ public class Partida {
         for (Equipe equipe : configuracaoDados.getEquipes()) {
             double volumeTotalHelioEquipe = 0;
             for (Robo robo : equipe.getRobos()) {
-                volumeTotalHelioEquipe += robo.getVolumeHelioProspectado();
+                volumeTotalHelioEquipe += robo.getVolumeHelioProspectado() + robo.getVolumeHelioProspectadoTotal();
             }
             System.out.printf("=====> A equipe %s prospectou %.2f de hélio-3%n", equipe.getNome(), volumeTotalHelioEquipe);
             if (volumeTotalHelioEquipe > maiorVolumeHelio) {

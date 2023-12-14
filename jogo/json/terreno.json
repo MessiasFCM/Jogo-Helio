@@ -7,34 +7,34 @@
       {"concentracaoHelio": 0.6, "coeficienteErroLeitura": [0.0, 0.09], "rugosidade": 0.4},
       {"concentracaoHelio": 0.7, "coeficienteErroLeitura": [0.0, 0.1], "rugosidade": 0.6},
       {"concentracaoHelio": 0.0, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.0},
-      {"concentracaoHelio": 0.0, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.0}
+      {"concentracaoHelio": 0.0, "coeficienteErroLeitura": [0.0, 0.02], "rugosidade": 0.0}
     ],
     [
       {"concentracaoHelio": 0.8, "coeficienteErroLeitura": [0.0, 0.1], "rugosidade": 0.5},
       {"concentracaoHelio": 0.4, "coeficienteErroLeitura": [0.0, 0.06], "rugosidade": 0.2},
       {"concentracaoHelio": 0.5, "coeficienteErroLeitura": [0.0, 0.04], "rugosidade": 0.3},
       {"concentracaoHelio": 0.0, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.0},
-      {"concentracaoHelio": 0.0, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.0}
+      {"concentracaoHelio": 0.0, "coeficienteErroLeitura": [0.0, 0.01], "rugosidade": 0.0}
     ],
     [
       {"concentracaoHelio": 0.6, "coeficienteErroLeitura": [0.0, 0.1], "rugosidade": 0.4},
       {"concentracaoHelio": 0.3, "coeficienteErroLeitura": [0.0, 0.07], "rugosidade": 0.1},
       {"concentracaoHelio": 0.4, "coeficienteErroLeitura": [0.0, 0.01], "rugosidade": 0.2},
       {"concentracaoHelio": 0.0, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.0},
-      {"concentracaoHelio": 0.0, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.0}
+      {"concentracaoHelio": 0.0, "coeficienteErroLeitura": [0.0, 0.05], "rugosidade": 0.0}
     ],
     [
       {"concentracaoHelio": 0.1, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.1},
-      {"concentracaoHelio": 0.2, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.2},
-      {"concentracaoHelio": 0.3, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.3},
+      {"concentracaoHelio": 0.2, "coeficienteErroLeitura": [0.0, 0.04], "rugosidade": 0.2},
+      {"concentracaoHelio": 0.3, "coeficienteErroLeitura": [0.0, 0.01], "rugosidade": 0.3},
       {"concentracaoHelio": 0.4, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.4},
       {"concentracaoHelio": 0.5, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.5}
     ],
     [
       {"concentracaoHelio": 0.2, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.2},
-      {"concentracaoHelio": 0.3, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.3},
+      {"concentracaoHelio": 0.3, "coeficienteErroLeitura": [0.0, 0.01], "rugosidade": 0.3},
       {"concentracaoHelio": 0.4, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.4},
-      {"concentracaoHelio": 0.5, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.5},
+      {"concentracaoHelio": 0.5, "coeficienteErroLeitura": [0.0, 0.03], "rugosidade": 0.5},
       {"concentracaoHelio": 0.6, "coeficienteErroLeitura": [0.0, 0.0], "rugosidade": 0.6}
     ]
   ]

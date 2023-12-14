@@ -4,17 +4,14 @@ import robos.Robo;
 import robos.RoboFTT;
 
 public class CarroceriaFortaleza extends Carroceria {
-    private double novaCapacidade;
-    public CarroceriaFortaleza() {
+    public CarroceriaFortaleza(Robo robo) {
         super("Fortaleza");
-    }
-
-    @Override
-    public void aplicarEfeito(Robo robo) {
         if (robo instanceof RoboFTT) {
             RoboFTT roboFTT = (RoboFTT) robo;
-            double novaCapacidade = roboFTT.getCapacidadeCarga() * 2;
-            roboFTT.setCapacidadeCarga();
+
+            // Transporta o dobro do Hélio-3
+            double novaCapacidade = roboFTT.getPorcentagemCarga() * 2;
+            roboFTT.setPorcentagemCarga(novaCapacidade);
         }
     }
 }

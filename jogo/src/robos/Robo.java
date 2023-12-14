@@ -11,6 +11,7 @@ public abstract class Robo {
     private String nome;
     private int posicaoAtualX;
     private int posicaoAtualY;
+    private double volumeHelioProspectadoTotal;
     private double volumeHelioProspectado;
     private String direcaoRobo = "LESTE";
     private Controlador controladorUtilizado;
@@ -19,7 +20,8 @@ public abstract class Robo {
     private double velocidadeExtracao = 1.0; // Velocidade de extração do robô, onde 1.0 representa 100% (padrão).
     private double agilidadeNaMovimentacao = 1.0; // Agilidade na movimentação do robô, onde 1.0 representa 100% (padrão).
     private double porcentagemCarga = 1.0; // Porcentagem de carga do robô, onde 1.0 representa 100% (padrão).
-    private double mutiplicadorErro = 1.0; // Multiplicador de erro do robô, onde 1.0 representa 100% (padrão).
+    private double tempoDescarga = 1.0; // Tempo de descarga do robô, onde 1.0 representa 100% (padrão).
+    private double erroPrecisaoLeitura = 1.0; // Multiplicador de erro do robô, onde 1.0 representa 100% (padrão).
 
 
     public Robo(String nome, int posicaoInicialX, int posicaoInicialY) {
@@ -27,30 +29,6 @@ public abstract class Robo {
         this.volumeHelioProspectado = 0.0;
         this.posicaoAtualX = posicaoInicialX;
         this.posicaoAtualY = posicaoInicialY;
-    }
-
-    public void prospeccao(Terreno terreno){
-        Celula celulaAtual = terreno.getCelula(getPosicaoAtualX(), getPosicaoAtualY());
-        double concentracao = celulaAtual.getConcentracaoHelio();
-        double volumeProspectado = celulaAtual.getConcentracaoHelio();
-
-        double cargaProspectada = volumeProspectado * porcentagemCarga;
-        volumeHelioProspectado += cargaProspectada;
-
-        double sobraProspectada = cargaProspectada - volumeProspectado;
-
-        celulaAtual.setConcentracaoHelio(sobraProspectada);
-
-        int segundos = (int) ((10 * concentracao) * velocidadeExtracao);
-        CalcularTempo.sleep(segundos);
-    }
-
-    public void descarregarHelio() {
-        if (carroceria != null) {
-            carroceria.aplicarEfeito(this);
-        }
-        System.out.println(nome + " realizou uma operação de descarga de Hélio-3.");
-        System.out.println("Carga atual: " + volumeHelioProspectado);
     }
 
     // Métodos get e set + toString
@@ -77,6 +55,14 @@ public abstract class Robo {
 
     public void setPosicaoAtualY(int posicaoAtualY) {
         this.posicaoAtualY = posicaoAtualY;
+    }
+
+    public double getVolumeHelioProspectadoTotal() {
+        return volumeHelioProspectadoTotal;
+    }
+
+    public void setVolumeHelioProspectadoTotal(double volumeHelioProspectadoTotal) {
+        this.volumeHelioProspectadoTotal = volumeHelioProspectadoTotal;
     }
 
     public double getVolumeHelioProspectado() {
@@ -143,12 +129,20 @@ public abstract class Robo {
         this.porcentagemCarga = porcentagemCarga;
     }
 
-    public double getMutiplicadorErro() {
-        return mutiplicadorErro;
+    public double getTempoDescarga() {
+        return tempoDescarga;
     }
 
-    public void setMutiplicadorErro(double mutiplicadorErro) {
-        this.mutiplicadorErro = mutiplicadorErro;
+    public void setTempoDescarga(double tempoDescarga) {
+        this.tempoDescarga = tempoDescarga;
+    }
+
+    public double getErroPrecisaoLeitura() {
+        return erroPrecisaoLeitura;
+    }
+
+    public void setErroPrecisaoLeitura(double erroPrecisaoLeitura) {
+        this.erroPrecisaoLeitura = erroPrecisaoLeitura;
     }
 
     @Override
@@ -157,6 +151,7 @@ public abstract class Robo {
                 "nome='" + nome + '\'' +
                 ", posicaoAtualX=" + posicaoAtualX +
                 ", posicaoAtualY=" + posicaoAtualY +
+                ", volumeHelioProspectadoTotal=" + volumeHelioProspectadoTotal +
                 ", volumeHelioProspectado=" + volumeHelioProspectado +
                 ", direcaoRobo='" + direcaoRobo + '\'' +
                 ", controladorUtilizado=" + controladorUtilizado +
@@ -165,7 +160,8 @@ public abstract class Robo {
                 ", velocidadeExtracao=" + velocidadeExtracao +
                 ", agilidadeNaMovimentacao=" + agilidadeNaMovimentacao +
                 ", porcentagemCarga=" + porcentagemCarga +
-                ", mutiplicadorErro=" + mutiplicadorErro +
+                ", tempoDescarga=" + tempoDescarga +
+                ", erroPrecisaoLeitura=" + erroPrecisaoLeitura +
                 '}';
     }
 }

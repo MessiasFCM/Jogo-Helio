@@ -1,5 +1,6 @@
 package controladores;
 
+import ambiente.Celula;
 import ambiente.Terreno;
 import funcionalidades.CalcularTempo;
 import robos.Robo;
@@ -10,15 +11,9 @@ public abstract class Controlador {
     public abstract void andar(Robo robo, Terreno terreno);
 
     public void iniciarProspeccao(Robo robo, Terreno terreno){
-        robo.prospeccao((terreno));
+        robo.getCarroceria().prospeccao(robo, terreno);
     }
 
-    public double sensorHelioDisponivel(Robo robo, Terreno terreno) {
-        Random geradorAleatorio = new Random();
-        double erro = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getCoeficienteErroLeitura()[0] + geradorAleatorio.nextDouble() * (terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getCoeficienteErroLeitura()[1] - terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getCoeficienteErroLeitura()[0]);
-        double concentracaoComErro = robo.getMutiplicadorErro() * terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getConcentracaoHelio() + (terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY()).getConcentracaoHelio() * erro);
-        return concentracaoComErro;
-    }
     public void andarParaFrente(Robo robo, Terreno terreno) {
         int novaPosX = robo.getPosicaoAtualX();
         int novaPosY = robo.getPosicaoAtualY();
@@ -79,6 +74,66 @@ public abstract class Controlador {
         }else{
             return true;
         }
+    }
+
+    public String buscaMaiorQuantidadeHelio(Robo robo, Terreno terreno) {
+
+        Random geradorAleatorio = new Random();
+        double maiorQuantidadeHelio = 0;
+        String lado = null;
+
+        if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX() + 1, robo.getPosicaoAtualY())) {
+            Celula celula = terreno.getCelula(robo.getPosicaoAtualX() + 1, robo.getPosicaoAtualY());
+
+            double erro = celula.getCoeficienteErroLeitura()[0] +
+                    geradorAleatorio.nextDouble() * (celula.getCoeficienteErroLeitura()[1] - celula.getCoeficienteErroLeitura()[0]);
+
+            double concentracaoComErro = robo.getErroPrecisaoLeitura() * celula.getConcentracaoHelio() + (celula.getConcentracaoHelio() * erro);
+            maiorQuantidadeHelio = concentracaoComErro;
+            lado = "OESTE";
+            System.out.println("Lado: OESTE:" + concentracaoComErro);
+        }
+        if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX() - 1, robo.getPosicaoAtualY())){
+            Celula celula = terreno.getCelula(robo.getPosicaoAtualX() - 1, robo.getPosicaoAtualY());
+
+            double erro = celula.getCoeficienteErroLeitura()[0] +
+                    geradorAleatorio.nextDouble() * (celula.getCoeficienteErroLeitura()[1] - celula.getCoeficienteErroLeitura()[0]);
+
+            double concentracaoComErro = robo.getErroPrecisaoLeitura() * celula.getConcentracaoHelio() + (celula.getConcentracaoHelio() * erro);
+            if(maiorQuantidadeHelio < concentracaoComErro){
+                maiorQuantidadeHelio = concentracaoComErro;
+                lado = "LESTE";
+            }
+            System.out.println("Lado: LESTE: " + concentracaoComErro);
+        }
+        if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() + 1)){
+            Celula celula = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() + 1);
+
+            double erro = celula.getCoeficienteErroLeitura()[0] +
+                    geradorAleatorio.nextDouble() * (celula.getCoeficienteErroLeitura()[1] - celula.getCoeficienteErroLeitura()[0]);
+
+            double concentracaoComErro = robo.getErroPrecisaoLeitura() * celula.getConcentracaoHelio() + (celula.getConcentracaoHelio() * erro);
+            if(maiorQuantidadeHelio < concentracaoComErro){
+                maiorQuantidadeHelio = concentracaoComErro;
+                lado = "NORTE";
+            }
+            System.out.println("Lado: NORTE: " + concentracaoComErro);
+        }
+        if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() - 1)){
+            Celula celula = terreno.getCelula(robo.getPosicaoAtualX(), robo.getPosicaoAtualY() - 1);
+
+            double erro = celula.getCoeficienteErroLeitura()[0] +
+                    geradorAleatorio.nextDouble() * (celula.getCoeficienteErroLeitura()[1] - celula.getCoeficienteErroLeitura()[0]);
+
+            double concentracaoComErro = robo.getErroPrecisaoLeitura() * celula.getConcentracaoHelio() + (celula.getConcentracaoHelio() * erro);
+            if(maiorQuantidadeHelio < concentracaoComErro){
+                maiorQuantidadeHelio = concentracaoComErro;
+                lado = "SUL";
+            }
+            System.out.println("Lado: SUL: " + concentracaoComErro);
+        }
+
+        return lado;
     }
 
     private boolean posicaoForaDosLimites(int posicaoX, int posicaoY, Terreno terreno) {

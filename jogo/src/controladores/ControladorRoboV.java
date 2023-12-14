@@ -14,6 +14,8 @@ public class ControladorRoboV extends Controlador {
     @Override
     public void andar(Robo robo, Terreno terreno) {
 
+
+
     }
 
 }

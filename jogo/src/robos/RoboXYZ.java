@@ -15,16 +15,6 @@ public class RoboXYZ extends Robo {
         setVelocidadeExtracao(2.0);
         setAgilidadeNaMovimentacao(1.5);
         setPorcentagemCarga(0.5);
-        setMutiplicadorErro(1.2);
-    }
-
-    @Override
-    public void prospeccao(Terreno terreno) {
-        super.prospeccao(terreno);
-    }
-
-    @Override
-    public void descarregarHelio() {
-        super.descarregarHelio();
+        setErroPrecisaoLeitura(1.2);
     }
 }
