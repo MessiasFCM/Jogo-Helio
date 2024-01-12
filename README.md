@@ -13,6 +13,7 @@ A ideia do Trabalho é desenvolver um jogo onde ocorre uma disputa entre robôs 
 ### Tecnologia Utilizada
 
 - Usamos o IntelliJ IDEA 2023.2.2, na linguagem java e a biblioteca com.google.code.gson:gson:2.10.1
+- Usamos o JUnit4, para execução dos casos de teste
 
 ### Como Usar
 
@@ -22,11 +23,16 @@ Basta abrir o arquivo pelo IntelliJ e executar, os dados e funções já estão 
 
 # Algumas imagens de execução do jogo:
 ### Início:
-![image](https://github.com/ufsj-dcomp/trabalho-pratico-lucas-melo-andre-c-messias-f/assets/79658287/68e0671c-69f8-4583-b3db-9d54e8886a7f)
+![image](https://github.com/ufsj-dcomp/trabalho-pratico-lucas-melo-andre-c-messias-f/assets/79658287/683938f4-dea0-4c7d-991e-2de213eccb48)
+
+
 ### Meio:
-![image](https://github.com/ufsj-dcomp/trabalho-pratico-lucas-melo-andre-c-messias-f/assets/79658287/c4a5eac9-6996-4e00-a6b8-e4c0ab666b77)
+![image](https://github.com/ufsj-dcomp/trabalho-pratico-lucas-melo-andre-c-messias-f/assets/79658287/79a4a314-18a1-4f05-b598-c0fc704ff60c)
+
+
 ### Fim:
-![image](https://github.com/ufsj-dcomp/trabalho-pratico-lucas-melo-andre-c-messias-f/assets/79658287/2815e428-fa22-40e6-8388-18453dc1d3b9)
+![image](https://github.com/ufsj-dcomp/trabalho-pratico-lucas-melo-andre-c-messias-f/assets/79658287/b0549269-3e07-40b4-bacc-b2d65c3a150a)
+
 
 
 

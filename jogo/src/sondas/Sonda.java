@@ -44,7 +44,7 @@ public class Sonda {
 
         Random geradorAleatorio = new Random();
         double maiorQuantidadeHelio = 0;
-        String lado = null;
+        String lado = "NULL";
 
         if(terreno.estaDentroDosLimites(robo.getPosicaoAtualX() + 1, robo.getPosicaoAtualY())) {
             Celula celula = terreno.getCelula(robo.getPosicaoAtualX() + 1, robo.getPosicaoAtualY());
